@@ -22,21 +22,25 @@ public class UDPReceiver implements Runnable {
 	
     private final EventListenerList listeners = new EventListenerList();
 
+    //Add a listener
 	public void addNewMessageListener(NewMessageListener listener) {
         this.listeners.add(NewMessageListener.class, listener);
     }
 
+	//Remove a listener
     public void removeNewMessageListener(NewMessageListener listener) {
         this.listeners.remove(NewMessageListener.class, listener);
     }
 
+    //SAve the list of listeners
     public NewMessageListener[] getNewMessageListeners() {
         return listeners.getListeners(NewMessageListener.class);
     }
 
-    protected void newMessageReceived(InetAddress address) {
+    //Notify listeners of a new message
+    protected void newMessageReceived(Message msg_event) {
 		for(NewMessageListener listener : getNewMessageListeners()) {
-            listener.aMessageHasBeenReceived(address);
+            listener.aMessageHasBeenReceived(msg_event);
         }
 	}
 
@@ -103,7 +107,6 @@ public class UDPReceiver implements Runnable {
 				catch (IOException e1) {
 					return;
 				}
-				System.out.println("J'ai reçu un message de "+ messageReceived.getAddress());
 				try{
 					//Deserialize the object and create a Message object from the bytes read
 					ByteArrayInputStream bais = new ByteArrayInputStream(messageReceived.getData());
@@ -121,8 +124,7 @@ public class UDPReceiver implements Runnable {
 				this.messagewithip[index] = this.messageRecu;
 				index = (index+1)%10;
 				this.setReceptionMessage(true);
-				this.newMessageReceived(address);
-				System.out.println(this.messageRecu.toTxt());
+				this.newMessageReceived(message);
 			}
 		}
 		finally {

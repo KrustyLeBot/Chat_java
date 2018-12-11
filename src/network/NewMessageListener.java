@@ -1,8 +1,9 @@
 package network;
 
-import java.net.InetAddress;
 import java.util.EventListener;
 
+import Messages.Message;
+
 public interface NewMessageListener extends EventListener {
-	void aMessageHasBeenReceived(InetAddress address);
+	void aMessageHasBeenReceived(Message msg_event);
 }

@@ -20,7 +20,10 @@ public class Main {
 	public static UDPReceiver msg_receiver;
 	public static Map<String,InetAddress> hm_users;
 	public static User me = null;
+	public static User blank = null;
 	public static User broadcast = null;
+	public static GUI_Thread graphic_thread;
+	public static InetAddress local_host;
 	
 	
 	public static void main(String[] args) {
@@ -30,7 +33,16 @@ public class Main {
 		//Creation of the connected users list
 		hm_users = new HashMap<>();
 		
-		//Creation of the user itself
+		//Get local host ip adress
+		try {
+			local_host = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Creation of the user blank => get all people connected without pseudo
+		blank = new User("BLANK_USER", local_host);
 				
 		//Creation of the user broadcast with represent everyone on the network and add it to the list of user
 		InetAddress addr=null;
@@ -43,19 +55,24 @@ public class Main {
 		hm_users.put(broadcast.pseudo, broadcast.ip);
 		
 		
-		//Creation of UDP interfaces
+		//Creation of UDP interfaces & GUI thread
 		msg_receiver = new UDPReceiver();
 		msg_sender = new UDPSender();
+		graphic_thread = new GUI_Thread();
 		
+		//Start the receiver and the GUI
 		StartReceiver();
+		StartGUI_Thread();
 		
-		set_pseudo("Jerome");
 		
-		
-		//test message send in broadcast
-		msg_sender.sendText("yop c'est jerome", me, broadcast);
-		
+		try {
+			Connect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
 	
 	//Start The receiver in another thread
 	public static void StartReceiver() {
@@ -63,58 +80,48 @@ public class Main {
 		t.start();
 	}
 	
-	public int Connect() throws IOException {
+	
+	//Start The GUI_Thread in another thread
+		public static void StartGUI_Thread() {
+			Thread t = new Thread(graphic_thread);
+			t.start();
+		}
+	
+		
+	public static int Connect() throws IOException {
+		//send a check in broadcast
+		msg_sender.sendCheckAll(blank, true);
+		
+		//WAiting 10 secondes so that everyone can respond
+		try {
+			Thread.sleep(10*1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		//Now,Set the pseudo=>has to be unique, and then notify everyone
+		set_pseudo("Jerome");
+		
 		if(me != null) {
-			//The user wants to connect to the network and get all users connected
-			//Broadcast a check
-			msg_sender.sendCheckAll(me);
-			//Get the response from everyone and add them to the hasmap
-			int i = 0;
-			while(msg_receiver.getMessagewithip(i) != null) {
-				//While there is messages in the buffer AND THEY ARE AN INSTANCE OF MsgCheck
-				Message msg = msg_receiver.getMessagewithip(i);
-				if(msg instanceof MsgCheck) {
-					MsgCheck message = (MsgCheck) msg;
-					//If they are a response to the check broadcast
-					if(message.answer_to_a_check) {
-						//Add them to the list of users
-						hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
-					}
-				}
-				i=(i+1)%10;
-			}
+			//Broadcast to all you pseudo and ip without asking for and answer==false
+			msg_sender.sendCheckAll(me, false);
 			System.out.println("All users on the network added to the Hashmap");
+			System.out.println(hm_users.toString());
 			return 1;
 		}
 		else return 0;
 		
 	}
 	
+	
 	public void Disconnect() {
+		//Broadcast bye to everybody
 		msg_sender.sendBye(me);
 	}
 	
+	
 	//Set the pseudo and the adress of the user
 	public static void set_pseudo(String pseudo) {
-		InetAddress i = null;
-		try {
-			i = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		me = new User(pseudo, i);
+		me = new User(pseudo, local_host);
 	}
-	
-	public int Talk_with(String dest) {
-		//Knock Knock method with only syn and syn/ack
-		//Send a SYN
-		
-		//Wait for a SYN/ACK
-		
-		
-		return 0;
-	}
-
 }

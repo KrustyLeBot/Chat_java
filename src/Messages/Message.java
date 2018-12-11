@@ -19,12 +19,6 @@ public class Message implements Serializable{
 
     }
 
-    public String getMessage()
-    {
-        return this.mess;
-
-    }
-
     public Date getHorodatation()
     {
         return this.horodatation;

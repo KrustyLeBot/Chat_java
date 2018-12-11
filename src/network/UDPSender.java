@@ -74,11 +74,11 @@ public class UDPSender {
 		MsgCheck mes=null;
 		switch(type){
 		case 1: 
-			//Msg_Check => question=false
+			//Type 1 = no need for an answer
 			mes = new MsgCheck(src, dest,false);
 			break;
 		case 2: 
-			//Check_Ok => answer=true
+			//Type 0 = an answer to the check is needed
 			mes = new MsgCheck(src, dest,true);
 			break;
 		default : 
@@ -91,10 +91,10 @@ public class UDPSender {
 	/*
 	 * Send Check in broadcast
 	 */
-	public void sendCheckAll(User src){
+	public void sendCheckAll(User src, boolean answer){
 		InetAddress addr=null;
 		
-		MsgCheck mes = new MsgCheck(src, Main.broadcast, false);
+		MsgCheck mes = new MsgCheck(src, Main.broadcast, answer);
 		this.sendMess(mes);
 	}
 	
