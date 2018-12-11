@@ -122,7 +122,7 @@ public class UDPReceiver implements Runnable {
 				index = (index+1)%10;
 				this.setReceptionMessage(true);
 				this.newMessageReceived(address);
-				System.out.println(this.messageRecu.toString());
+				System.out.println(this.messageRecu.toTxt());
 			}
 		}
 		finally {

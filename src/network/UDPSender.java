@@ -1,4 +1,5 @@
 package network;
+import main.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,9 +35,14 @@ public class UDPSender {
 	/*
 	 * Method that send a given message in UDP mode
 	 */
-	public void sendMess(Message mes, InetAddress iptosend) {
+	public void sendMess(Message mes) {
+		//Save the last message sent
 		this.lastMessage=mes;
+		
+		//Arbitrary port
 		int port = 1234;
+		
+		//Messages length & output stream
 		byte[] buf = new byte[2048];
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
@@ -47,7 +53,11 @@ public class UDPSender {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		DatagramPacket mestosend = new DatagramPacket(buf, buf.length, iptosend, port);
+		
+		//datagram message creation
+		DatagramPacket mestosend = new DatagramPacket(buf, buf.length, mes.getDestinataire().ip, port);
+		
+		//Sending the datagram
 		try {
 			this.socket.send(mestosend);
 		} catch (IOException e) {
@@ -60,39 +70,38 @@ public class UDPSender {
 	 * Send Check to a specific person
 	 */
 	
-	public void sendCheck(int type, InetAddress iptosend, String usernameSrc, String usernameDest){
+	public void sendCheck(int type, User src, User dest){
 		MsgCheck mes=null;
 		switch(type){
 		case 1: 
 			//Msg_Check => question=false
-			mes = new MsgCheck(usernameSrc, usernameDest,false);
+			mes = new MsgCheck(src, dest,false);
 			break;
 		case 2: 
 			//Check_Ok => answer=true
-			mes = new MsgCheck(usernameSrc, usernameDest,true);
+			mes = new MsgCheck(src, dest,true);
 			break;
 		default : 
 			break;
 		}
-		this.sendMess(mes, iptosend);
+		this.sendMess(mes);
 	}
 
 	
 	/*
 	 * Send Check in broadcast
 	 */
-	public void sendCheckAll(String usernameSrc){
+	public void sendCheckAll(User src){
 		InetAddress addr=null;
-		try {
-			addr = InetAddress.getByName("255.255.255.255");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		MsgCheck mes = new MsgCheck(usernameSrc, "EVERYBODY_ON_NETWORK", false);
-		this.sendMess(mes, addr);
+		
+		MsgCheck mes = new MsgCheck(src, Main.broadcast, false);
+		this.sendMess(mes);
 	}
 	
-	public void sendHello(int type,InetAddress iptosend, String usernameSrc, String usernameDest){
+	/*
+	 * Send Hello in to someone => Knock Knock protocol
+	 */
+	public void sendHello(int type, User src, User dest){
 		boolean ack=false;
 		boolean connect=false;
 		switch(type){
@@ -112,30 +121,26 @@ public class UDPSender {
 			connect=false;
 			break;
 	}
-		MsgHello mes = new MsgHello(usernameSrc, usernameDest,ack, connect);
-		this.sendMess(mes, iptosend);
+		MsgHello mes = new MsgHello(src, dest,ack, connect);
+		this.sendMess(mes);
 	}
 	
 	/*
-	 * Send goodbyeMessage in broadcast
+	 * Send goodbyeMessage in broadcast => disconnect
 	 */
-	public void sendBye(String usernameSrc){
+	public void sendBye(User src){
 		InetAddress addr=null;
-		try {
-			addr = InetAddress.getByName("255.255.255.255");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		MsgGoodbye mes = new MsgGoodbye(usernameSrc);
-		this.sendMess(mes, addr);
+		
+		MsgGoodbye mes = new MsgGoodbye(src, Main.broadcast);
+		this.sendMess(mes);
 	}
 	
 	/*
 	 * Send message Text
 	 */
-	public void sendMessageNormal(InetAddress iptosend, String message, String usernameSrc, String usernameDest){
-		MsgTxt mes = new MsgTxt(usernameSrc, usernameDest, message);
-		this.sendMess(mes, iptosend);
+	public void sendText(String text, User src, User dest){
+		MsgTxt mes = new MsgTxt(src, dest, text);
+		this.sendMess(mes);
 	}
 	
 	

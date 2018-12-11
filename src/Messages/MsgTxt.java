@@ -5,8 +5,8 @@ import main.*;
 
 public class MsgTxt extends Message implements Serializable{
 	
-	public MsgTxt(String src, String dest, String msg) {
-		super(msg, new User(src));		
+	public MsgTxt(User src, User dest, String msg) {
+		super(msg, src, dest);		
 	}
 
 }

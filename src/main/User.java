@@ -6,15 +6,12 @@ import java.net.UnknownHostException;
 
 public class User implements Serializable{
 	
+	//A user has a pseudo (unique) and an @IP
 	public String pseudo;	
-	public String ip;
+	public InetAddress ip;
 	
-	public User(String src) {
-		this.pseudo = src;
-		try {
-			this.ip = InetAddress.getLocalHost().toString();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+	public User(String pseudo, InetAddress i) {
+		this.pseudo = pseudo;
+		this.ip = i;
 	}
 }

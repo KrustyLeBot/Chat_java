@@ -4,7 +4,7 @@ import main.User;
 
 public class MsgGoodbye extends Message{
 	
-	public MsgGoodbye(String src) {
-		super("Goodbye.", new User(src));		
+	public MsgGoodbye(User src, User dest) {
+		super("Goodbye.", src, dest);		
 	}
 }
