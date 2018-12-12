@@ -12,8 +12,11 @@ public class GUI_Thread implements Runnable{
 		Main.msg_receiver.addNewMessageListener(new NewMessageListener () {
 			@Override public void aMessageHasBeenReceived(Message msg) {
 				
-				//gestion de l'interface graphique avec la mise a jour des differents elements
+				//If the message is from the user itself(like a broadcast) exclude it
+				if(msg.getEmetteur() == Main.me) return;
 				
+				
+				//First, message paring and casting to the correct type
 				//If the message is a check
 				if(msg instanceof MsgCheck) {
 					MsgCheck message = (MsgCheck) msg;
@@ -38,6 +41,11 @@ public class GUI_Thread implements Runnable{
 					System.out.println("J'ai reçu un message de "+ msg.getEmetteur().ip.toString());
 					System.out.println(msg.toTxt());
 				}
+				
+				
+				
+				
+				//gestion de l'interface graphique avec la mise a jour des differents elements
 			}
 		});
 	}
