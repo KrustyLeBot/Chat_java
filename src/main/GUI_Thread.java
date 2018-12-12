@@ -27,8 +27,9 @@ public class GUI_Thread implements Runnable{
 					
 					
 					//If it is a message from blank_user and asking an answer
-					if(message.need_an_answer & message.getDestinataire().equals(Main.blank)) {
+					if(message.need_an_answer & message.getEmetteur().equals(Main.blank)) {
 						//Then send a check back without asking for an answer
+						System.out.println("Reponse au nouvel utilisateur");
 						Main.msg_sender.sendCheck(false, Main.me, message.getEmetteur());
 					}
 
