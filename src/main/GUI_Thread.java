@@ -14,12 +14,17 @@ public class GUI_Thread implements Runnable{
 
 				//If the message is from the user itself(like a broadcast) exclude it
 				if(msg.getEmetteur().ip.equals(Main.local_host)) return;	
-								
+				
 				
 				//First, message paring and casting to the correct type
 				//If the message is a check
 				if(msg instanceof MsgCheck) {
 					MsgCheck message = (MsgCheck) msg;
+					
+					//Affichage de tous les messages
+					System.out.println("Message recu de: " + message.getEmetteur().pseudo);
+					System.out.println("is a check needing an answer?: " + message.need_an_answer);
+					
 					
 					//If it is a message from blank_user and asking an answer
 					if(message.need_an_answer & message.getDestinataire().equals(Main.blank)) {
