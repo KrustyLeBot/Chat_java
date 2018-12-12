@@ -65,19 +65,6 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int i = 0;
-		while(i<10) {
-			try {
-				Thread.sleep(2*1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			sendMsgTo("alice", "bob to alice num:"+i);
-			i++;
-		}
-		
-		msg_sender.sendBye(me);
 	}
 	
 	//Ask for a pseudo
@@ -99,10 +86,10 @@ public class Main {
 	
 	
 	//Start The GUI_Thread in another thread
-	public static void StartGUI_Thread() {
-		Thread t = new Thread(graphic_thread);
-		t.start();
-	}
+		public static void StartGUI_Thread() {
+			Thread t = new Thread(graphic_thread);
+			t.start();
+		}
 	
 		
 	public static int Connect() throws IOException {
@@ -148,10 +135,5 @@ public class Main {
 	//Set the pseudo and the adress of the user
 	public static void set_pseudo(String pseudo) {
 		me = new User(pseudo, local_host);
-	}
-	
-	//Send a text message to a pseudo
-	public static void sendMsgTo(String pseudo, String msg) {
-		msg_sender.sendText(msg, me, new User(pseudo, hm_users.get(pseudo)));
 	}
 }
