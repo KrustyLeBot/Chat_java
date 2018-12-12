@@ -21,8 +21,9 @@ public class GUI_Thread implements Runnable{
 				if(msg instanceof MsgCheck) {
 					MsgCheck message = (MsgCheck) msg;
 					
-					//If it is an answer to a blank check=>asking for an answer
-					if(message.answer_to_a_check & message.getDestinataire() == Main.blank) {
+					//If it is a message from blank_user and asking an answer
+					if(message.answer_to_a_check & message.getDestinataire().equals(Main.blank)) {
+						//Then send a check back without asking for an answer
 						Main.msg_sender.sendCheck(1, Main.me, message.getEmetteur());
 					}
 

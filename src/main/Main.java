@@ -93,10 +93,10 @@ public class Main {
 	
 		
 	public static int Connect() throws IOException {
-		//send a check in broadcast
+		//send a check in broadcast askinf for an aswer
 		msg_sender.sendCheckAll(blank, true);
 		
-		//WAiting 10 secondes so that everyone can respond
+		//Waiting 10 secondes so that everyone can respond
 		try {
 			Thread.sleep(5*1000);
 		} catch (InterruptedException e) {
