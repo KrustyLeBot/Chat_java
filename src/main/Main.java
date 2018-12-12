@@ -65,22 +65,6 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		int i = 0;
-		while(i<10) {
-			try {
-				Thread.sleep(2*1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			System.out.println("send msg to alice");
-			sendMsgTo("alice", "bob to alice num:"+i);
-			i++;
-		}
-		
-		msg_sender.sendBye(me);
-=======
->>>>>>> 0eed0c69b81ef8237218bcf2f3e410eceb3e6ece
 	}
 	
 	//Ask for a pseudo
