@@ -98,7 +98,7 @@ public class Main {
 		
 		//WAiting 10 secondes so that everyone can respond
 		try {
-			Thread.sleep(10*1000);
+			Thread.sleep(5*1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -109,6 +109,14 @@ public class Main {
 		if(me != null) {
 			//Broadcast to all you pseudo and ip without asking for and answer==false
 			msg_sender.sendCheckAll(me, false);
+			
+			//Wait everyone to add you
+			try {
+				Thread.sleep(5*1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			System.out.println("All users on the network added to the Hashmap");
 			System.out.println(hm_users.toString());
 			return 1;
