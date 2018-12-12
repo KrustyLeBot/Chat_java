@@ -3,10 +3,10 @@ import main.*;
 
 public class MsgCheck extends Message{
 	
-	public boolean answer_to_a_check;
-	public MsgCheck(User src, User dest, boolean answer_to_a_check) {
+	public boolean need_an_answer;
+	public MsgCheck(User src, User dest, boolean need_an_answer) {
 		super("Check.",src, dest);
-		this.answer_to_a_check = answer_to_a_check;
+		this.need_an_answer = need_an_answer;
 	}
 
 }

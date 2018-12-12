@@ -22,16 +22,17 @@ public class GUI_Thread implements Runnable{
 					MsgCheck message = (MsgCheck) msg;
 					
 					//If it is a message from blank_user and asking an answer
-					if(message.answer_to_a_check & message.getDestinataire().equals(Main.blank)) {
+					if(message.need_an_answer & message.getDestinataire().equals(Main.blank)) {
 						//Then send a check back without asking for an answer
-						Main.msg_sender.sendCheck(1, Main.me, message.getEmetteur());
+						Main.msg_sender.sendCheck(false, Main.me, message.getEmetteur());
 					}
 
 					//If it is check not asking an answer
-					else if(!message.answer_to_a_check) {
+					else if(!message.need_an_answer) {
 						//Then add the user to the list of connected people
 						Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
 						System.out.println("User added: " + message.getEmetteur().pseudo);
+						System.out.println(Main.hm_users.toString());
 					}
 					
 					//It can't be a check asking an answer without the sender being blank
@@ -39,7 +40,7 @@ public class GUI_Thread implements Runnable{
 				
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
-					System.out.println("J'ai reÃ§u un message de "+ msg.getEmetteur().ip.toString());
+					System.out.println("J'ai reçu un message de "+ msg.getEmetteur().ip.toString());
 					System.out.println(msg.toTxt());
 				}
 				

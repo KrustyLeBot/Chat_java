@@ -70,20 +70,17 @@ public class UDPSender {
 	 * Send Check to a specific person
 	 */
 	
-	public void sendCheck(int type, User src, User dest){
+	public void sendCheck(boolean type, User src, User dest){
 		MsgCheck mes=null;
-		switch(type){
-		case 1: 
-			//Type 1 = no need for an answer
-			mes = new MsgCheck(src, dest,false);
-			break;
-		case 2: 
-			//Type 0 = an answer to the check is needed
+		if(type) {
+			//Type true = need an answer
 			mes = new MsgCheck(src, dest,true);
-			break;
-		default : 
-			break;
 		}
+		else {
+			//Type false = no need for an answer
+			mes = new MsgCheck(src, dest,false);
+		}
+
 		this.sendMess(mes);
 	}
 
@@ -91,10 +88,8 @@ public class UDPSender {
 	/*
 	 * Send Check in broadcast
 	 */
-	public void sendCheckAll(User src, boolean answer){
-		InetAddress addr=null;
-		
-		MsgCheck mes = new MsgCheck(src, Main.broadcast, answer);
+	public void sendCheckAll(User src, boolean need_an_answer){
+		MsgCheck mes = new MsgCheck(src, Main.broadcast, need_an_answer);
 		this.sendMess(mes);
 	}
 	
