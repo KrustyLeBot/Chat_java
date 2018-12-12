@@ -27,6 +27,7 @@ public class GUI_Thread implements Runnable{
 					else if(!message.answer_to_a_check) {
 						//Then add the user to the list of connected people
 						Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
+						System.out.println("User added: " + message.getEmetteur().pseudo);
 					}
 					
 					//It can't be a check asking an answer without the sender being blank
