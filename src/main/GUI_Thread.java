@@ -37,16 +37,18 @@ public class GUI_Thread implements Runnable{
 					//It can't be a check asking an answer without the sender being blank
 				}
 				
+				
+				//If the message is a bye, remove the sender from the list of connected users
+				if(msg instanceof MsgGoodbye) {
+					Main.hm_users.remove(msg.getEmetteur().pseudo);
+				}
+				
+				
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
 					System.out.println("J'ai reçu un message de "+ msg.getEmetteur().ip.toString());
 					System.out.println(msg.toTxt());
 				}
-				
-				
-				
-				
-				//gestion de l'interface graphique avec la mise a jour des differents elements
 			}
 		});
 	}
