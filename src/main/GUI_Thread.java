@@ -11,10 +11,10 @@ public class GUI_Thread implements Runnable{
 		
 		Main.msg_receiver.addNewMessageListener(new NewMessageListener () {
 			@Override public void aMessageHasBeenReceived(Message msg) {
-				
+
 				//If the message is from the user itself(like a broadcast) exclude it
-				if(msg.getEmetteur() == Main.me) return;
-				
+				if(msg.getEmetteur().ip.equals(Main.local_host)) return;	
+								
 				
 				//First, message paring and casting to the correct type
 				//If the message is a check

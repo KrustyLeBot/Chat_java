@@ -1,17 +1,11 @@
 package main;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
-
-import Messages.*;
+import java.util.Scanner;
 import network.*;
 
 public class Main {
@@ -63,8 +57,8 @@ public class Main {
 		//Start the receiver and the GUI
 		StartReceiver();
 		StartGUI_Thread();
-		
-		
+
+		//Try to engage the connection with the network
 		try {
 			Connect();
 		} catch (IOException e) {
@@ -73,7 +67,17 @@ public class Main {
 		}
 	}
 	
-	
+	//Ask for a pseudo
+	public static String AskPseudo() {
+		String str = null;
+		Scanner reader = new Scanner(System.in);  // Reading from System.in
+		System.out.println("Enter a Pseudo: ");
+		str = reader.next(); // Scans the next token of the input as an int.
+		//once finished
+		reader.close();
+		return str;
+	}
+		
 	//Start The receiver in another thread
 	public static void StartReceiver() {
 		Thread t = new Thread(msg_receiver);
@@ -100,7 +104,7 @@ public class Main {
 		}
 		
 		//Now,Set the pseudo=>has to be unique, and then notify everyone
-		set_pseudo("Jerome");
+		set_pseudo(AskPseudo());
 		
 		if(me != null) {
 			//Broadcast to all you pseudo and ip without asking for and answer==false
