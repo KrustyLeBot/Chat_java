@@ -72,7 +72,7 @@ public class Main {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+			System.out.println("send msg to alice");
 			sendMsgTo("alice", "bob to alice num:"+i);
 			i++;
 		}
