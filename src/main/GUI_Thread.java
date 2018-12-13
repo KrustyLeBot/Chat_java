@@ -16,13 +16,17 @@ public class GUI_Thread implements Runnable{
 				System.out.println("J'ai reçu un message de "+ msg.getEmetteur().pseudo);
 				
 				//If the message is from the user itself(like a broadcast) exclude it
-				if(msg.getEmetteur().ip.equals(Main.local_host)) return;	
+				if(msg.getEmetteur().ip.equals(Main.local_host)) {
+					System.out.println("messaged reçu de localhost: " + msg.getEmetteur().ip.toString());
+					return;	
+				}
 				
 				
 				//First, message paring and casting to the correct type
 				//If the message is a check
 				if(msg instanceof MsgCheck) {
-					MsgCheck message = (MsgCheck) msg;					
+					MsgCheck message = (MsgCheck) msg;	
+					System.out.println("J'ai reçu un message de "+ message.getEmetteur().pseudo+message.need_an_answer);
 					
 					//If it is a message from blank_user and asking an answer
 					if(message.need_an_answer & message.getEmetteur().pseudo.equals(Main.blank.pseudo)) {
@@ -42,7 +46,7 @@ public class GUI_Thread implements Runnable{
 				
 				
 				//If the message is a bye, remove the sender from the list of connected users
-				if(msg instanceof MsgGoodbye) {
+				else if(msg instanceof MsgGoodbye) {
 					Main.hm_users.remove(msg.getEmetteur().pseudo);
 				}
 				
