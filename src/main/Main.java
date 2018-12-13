@@ -60,8 +60,8 @@ public class Main {
 		StartReceiver();
 		StartGUI_Thread();
 		
-		
-		run();
+		try {Connect();} catch (IOException e) {e.printStackTrace();}
+		//run();
 	}
 	
 	public static void run() {
@@ -111,13 +111,8 @@ public class Main {
 		//send a check in broadcast askinf for an aswer
 		msg_sender.sendCheckAll(blank, true);
 		
-		
 		//Waiting 5 secondes so that everyone can respond
-		try {
-			Thread.sleep(5*1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		try {Thread.sleep(5*1000);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		
 		//Now,Set the pseudo=>has to be unique, and then notify everyone if it is
@@ -176,7 +171,7 @@ public class Main {
 	
 	public static void send_msg(String dest, String message) {
 		if(!connected) {
-			System.out.println("Connect to the network before trying to sen a message");
+			System.out.println("Connect to the network before trying to send a message");
 			return;
 		}
 		if(hm_users.get(dest)==null) {
