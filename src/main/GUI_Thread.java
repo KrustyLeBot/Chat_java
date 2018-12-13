@@ -46,7 +46,7 @@ public class GUI_Thread implements Runnable{
 				
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
-					System.out.println("J'ai reçu un message de "+ msg.getEmetteur().ip.toString());
+					System.out.println("J'ai reÃ§u un message de "+ msg.getEmetteur().ip.toString());
 					System.out.println(msg.toTxt());
 				}
 			}

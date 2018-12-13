@@ -94,33 +94,6 @@ public class UDPSender {
 	}
 	
 	/*
-	 * Send Hello in to someone => Knock Knock protocol
-	 */
-	public void sendHello(int type, User src, User dest){
-		boolean ack=false;
-		boolean connect=false;
-		switch(type){
-		case 1 : 
-			//Message Hello
-			ack=false;
-			connect=true;
-			break;
-		case 2 : 
-			//Message Hello_Ok
-			ack=true;
-			connect=true;
-			break;
-		case 3 : 
-			//Message Hello_Not_Ok
-			ack=true;
-			connect=false;
-			break;
-	}
-		MsgHello mes = new MsgHello(src, dest,ack, connect);
-		this.sendMess(mes);
-	}
-	
-	/*
 	 * Send goodbyeMessage in broadcast => disconnect
 	 */
 	public void sendBye(User src){
@@ -138,8 +111,6 @@ public class UDPSender {
 		this.sendMess(mes);
 	}
 	
-	
-	
 	public DatagramSocket getSocket(){
 		return this.socket;
 	}
@@ -153,7 +124,7 @@ public class UDPSender {
 		return this.lastMessage;
 	}
 	
-	protected void finalize() throws Throwable
+	public void finalize() throws Throwable
     { 
 		try{
 			System.out.println("Closing socket at port "+this.socket.getLocalPort());

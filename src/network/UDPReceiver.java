@@ -83,7 +83,6 @@ public class UDPReceiver implements Runnable {
 		Thread.currentThread().interrupt();
 	}
 
-
 	@Override
 	public void run() {
 		byte[] buf = new byte[8192];
@@ -143,7 +142,7 @@ public class UDPReceiver implements Runnable {
 		socket.close();
 	}
 	
-	protected void finalize() throws Throwable
+	public void finalize() throws Throwable
     { 
 		try{
 			System.out.println("Closing socket from port "+this.socket.getLocalPort());

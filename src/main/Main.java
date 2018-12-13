@@ -18,6 +18,8 @@ public class Main {
 	public static User broadcast = null;
 	public static GUI_Thread graphic_thread;
 	public static InetAddress local_host;
+	public static boolean connected = false;
+	public static Scanner reader = new Scanner(System.in);  // Reading from System.in
 	
 	
 	public static void main(String[] args) {
@@ -57,25 +59,39 @@ public class Main {
 		//Start the receiver and the GUI
 		StartReceiver();
 		StartGUI_Thread();
-
-		//Try to engage the connection with the network
-		try {
-			Connect();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		run();
 	}
 	
-	//Ask for a pseudo
-	public static String AskPseudo() {
-		String str = null;
-		Scanner reader = new Scanner(System.in);  // Reading from System.in
-		System.out.println("Enter a Pseudo: ");
-		str = reader.next(); // Scans the next token of the input as an int.
-		//once finished
-		reader.close();
-		return str;
+	public static void run() {
+		
+		while(true) {
+			System.out.println("Connexion => 0");
+			System.out.println("Deconnexion => 1");
+			System.out.println("Envoyer un message texte => 2");
+			
+			System.out.println("Choose an action & enter the correct number: ");
+			
+			switch(reader.nextInt()) {
+				case 0:
+					try {Connect();} catch (IOException e) {e.printStackTrace();}
+					break;
+					
+				case 1:
+					Disconnect();
+					break;
+					
+				case 2:
+					System.out.println("Pseudo of the person");
+					String dest = reader.next();
+					System.out.println("Message to send");
+					String msg = reader.next();
+					send_msg(dest,msg);
+					break;
+			}
+			//once finished
+			try {Thread.sleep(2*1000);} catch (InterruptedException e) {e.printStackTrace();}
+		}
 	}
 		
 	//Start The receiver in another thread
@@ -84,56 +100,91 @@ public class Main {
 		t.start();
 	}
 	
-	
 	//Start The GUI_Thread in another thread
-		public static void StartGUI_Thread() {
-			Thread t = new Thread(graphic_thread);
-			t.start();
-		}
+	public static void StartGUI_Thread() {
+		Thread t = new Thread(graphic_thread);
+		t.start();
+	}
 	
-		
 	public static int Connect() throws IOException {
 		//send a check in broadcast askinf for an aswer
 		msg_sender.sendCheckAll(blank, true);
 		
-		//Waiting 10 secondes so that everyone can respond
+		
+		//Waiting 5 secondes so that everyone can respond
 		try {
 			Thread.sleep(5*1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
-		//Now,Set the pseudo=>has to be unique, and then notify everyone
-		set_pseudo(AskPseudo());
+		
+		//Now,Set the pseudo=>has to be unique, and then notify everyone if it is
+		String str = AskPseudo();
+		if(hm_users.get(str) != null) {
+			connected = false;
+			return 0;
+		}
+		set_pseudo(str);
+		
 		
 		if(me != null) {
-			//Broadcast to all you pseudo and ip without asking for and answer==false
+			//Broadcast to all you pseudo and ip without asking for and answer
 			msg_sender.sendCheckAll(me, false);
-			
-			//Wait everyone to add you
-			try {
-				Thread.sleep(5*1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			
 			System.out.println("All users on the network added to the Hashmap");
 			System.out.println(hm_users.toString());
+			
+			connected = true;
 			return 1;
 		}
-		else return 0;
+		else {
+			connected = false;
+			return 0;
+		}
 		
 	}
 	
-	
-	public void Disconnect() {
+	public static void Disconnect() {
 		//Broadcast bye to everybody
 		msg_sender.sendBye(me);
+		
+		try {
+			msg_receiver.interruption();
+			msg_receiver.finalize();
+			msg_sender.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
+	//Ask for a pseudo
+	public static String AskPseudo() {
+		String str = null;
+		System.out.println("Enter a Pseudo: ");
+		str = reader.next(); // Scans the next token of the input as an int.
+		//once finished
+		return str;
+	}
 	
 	//Set the pseudo and the adress of the user
 	public static void set_pseudo(String pseudo) {
 		me = new User(pseudo, local_host);
+	}
+	
+	public static void send_msg(String dest, String message) {
+		if(!connected) {
+			System.out.println("Connect to the network before trying to sen a message");
+			return;
+		}
+		if(hm_users.get(dest)==null) {
+		System.out.println("The user is not connected to the network");
+		return;
+		}
+		
+		User des = new User(dest, hm_users.get(dest));
+		
+		msg_sender.sendText(message, me, des);		
 	}
 }
