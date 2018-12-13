@@ -60,6 +60,7 @@ public class Main {
 		StartReceiver();
 		StartGUI_Thread();
 		
+		
 		run();
 	}
 	
