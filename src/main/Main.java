@@ -28,26 +28,19 @@ public class Main {
 	public static Scanner reader = new Scanner(System.in);  // Reading from System.in
 	
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hello World");
-		
+	public static void main(String[] args) {		
 		//Creation of the connected users list
 		hm_users = new HashMap<>();
 		
 		//Get local host ip adress
 		try {local_host = getLocalAddress();} catch (SocketException e1) {e1.printStackTrace();}
-		System.out.println(local_host);
 		
 		//Creation of the user blank => get all people connected without pseudo
 		blank = new User("BLANK_USER", local_host);
 				
 		//Creation of the user broadcast with represent everyone on the network and add it to the list of user
 		InetAddress addr=null;
-		try {
-			addr = InetAddress.getByName("255.255.255.255");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
+		try {addr = InetAddress.getByName("255.255.255.255");} catch (UnknownHostException e) {e.printStackTrace();
 		}
 		broadcast = new User("BROADCAST", addr);
 		hm_users.put(broadcast.pseudo, broadcast.ip);
@@ -145,15 +138,7 @@ public class Main {
 	public static void Disconnect() {
 		//Broadcast bye to everybody
 		msg_sender.sendBye(me);
-		
-		try {
-			msg_receiver.interruption();
-			msg_receiver.finalize();
-			msg_sender.finalize();
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		
+		try {msg_receiver.interruption();} catch (Throwable e) {e.printStackTrace();}
 	}
 	
 	//Ask for a pseudo

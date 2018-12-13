@@ -12,12 +12,10 @@ public class GUI_Thread implements Runnable{
 		Main.msg_receiver.addNewMessageListener(new NewMessageListener () {
 			@Override public void aMessageHasBeenReceived(Message msg) {
 				
-				//If the message is from the user itself(like a broadcast) exclude it
-				if(msg.getEmetteur().ip.equals(Main.local_host)) {
-					System.out.println("messaged reçu de localhost: " + msg.getEmetteur().ip.toString());
-					return;	
-				}
+				System.out.println("messaged reçu de : " + msg.getEmetteur().pseudo);
 				
+				//If the message is from the user itself(like a broadcast) exclude it
+				if(msg.getEmetteur().ip.equals(Main.local_host))return;				
 				
 				//First, message paring and casting to the correct type
 				//If the message is a check
@@ -36,20 +34,18 @@ public class GUI_Thread implements Runnable{
 						Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
 						System.out.println("User added: " + message.getEmetteur().pseudo);
 					}
-					
-					//It can't be a check asking an answer without the sender being blank
 				}
 				
 				
 				//If the message is a bye, remove the sender from the list of connected users
 				else if(msg instanceof MsgGoodbye) {
+					System.out.println("User removed: " + msg.getEmetteur().pseudo);
 					Main.hm_users.remove(msg.getEmetteur().pseudo);
 				}
 				
-				
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
-					System.out.println("J'ai reçu un message de "+ msg.getEmetteur().ip.toString());
+					System.out.println("Message receive from "+ msg.getEmetteur().pseudo);
 					System.out.println(msg.toTxt());
 				}
 			}
