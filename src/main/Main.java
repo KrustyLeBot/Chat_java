@@ -1,8 +1,14 @@
 package main;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
+import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -30,12 +36,8 @@ public class Main {
 		hm_users = new HashMap<>();
 		
 		//Get local host ip adress
-		try {
-			local_host = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		try {local_host = getLocalAddress();} catch (SocketException e1) {e1.printStackTrace();}
+		System.out.println(local_host);
 		
 		//Creation of the user blank => get all people connected without pseudo
 		blank = new User("BLANK_USER", local_host);
@@ -60,9 +62,9 @@ public class Main {
 		StartReceiver();
 		StartGUI_Thread();
 		
-		try {Connect();} catch (IOException e) {e.printStackTrace();}
-		//run();
+		run();
 	}
+	
 	
 	public static void run() {
 		
@@ -140,7 +142,6 @@ public class Main {
 		}
 		
 	}
-	
 	public static void Disconnect() {
 		//Broadcast bye to everybody
 		msg_sender.sendBye(me);
@@ -183,4 +184,24 @@ public class Main {
 		
 		msg_sender.sendText(message, me, des);		
 	}
+	
+	public static InetAddress getLocalAddress() throws SocketException{
+	    Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
+	    while( ifaces.hasMoreElements() )
+	    {
+	      NetworkInterface iface = ifaces.nextElement();
+	      Enumeration<InetAddress> addresses = iface.getInetAddresses();
+
+	      while( addresses.hasMoreElements() )
+	      {
+	        InetAddress addr = addresses.nextElement();
+	        if( addr instanceof Inet4Address && !addr.isLoopbackAddress() )
+	        {
+	          return addr;
+	        }
+	      }
+	    }
+
+	    return null;
+	  }
 }
