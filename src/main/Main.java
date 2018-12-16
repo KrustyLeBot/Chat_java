@@ -82,7 +82,6 @@ public class Main {
 	
 	
 	public static void Connect() {
-		connecting = true;
 		Thread t = new Thread(connect);
 		t.start();
 	}
