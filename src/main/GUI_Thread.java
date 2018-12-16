@@ -19,6 +19,8 @@ public class GUI_Thread implements Runnable{
 				//If the message is from the user itself(like a broadcast) exclude it
 				if(msg.getEmetteur().ip.equals(Main.local_host))return;	
 				
+				System.out.println("messaged recu de l'exterieur");
+				
 				//First, message paring and casting to the correct type
 				//If the message is a check
 				if(msg instanceof MsgCheck) {
