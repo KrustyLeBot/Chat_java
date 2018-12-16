@@ -115,12 +115,13 @@ public class fenetre extends JFrame {
 				//Appeler la méthode Disconnect
 				//Disconnect();
 				
-				if(Main.connected) Main.Disconnect();
-				
-				btnConnexion.setEnabled(true);
-				btnDeconnexion.setEnabled(false);
-				textField_1.setEnabled(true);
-				btnEnvoyer.setEnabled(false);
+				if(Main.connected) {
+					Main.Disconnect();
+					btnConnexion.setEnabled(true);
+					btnDeconnexion.setEnabled(false);
+					textField_1.setEnabled(true);
+					btnEnvoyer.setEnabled(false);
+				}
 			}
 		});
 				
