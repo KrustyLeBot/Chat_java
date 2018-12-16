@@ -33,7 +33,7 @@ public class GUI_Thread implements Runnable{
 					//If it is check not asking an answer
 					else if(!message.need_an_answer) {
 						//Then add the user to the list of connected people
-						if(Main.connected) {
+						if(Main.connecting | Main.connected) {
 							Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
 							System.out.println("User added: " + message.getEmetteur().pseudo);
 							

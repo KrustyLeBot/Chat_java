@@ -25,6 +25,7 @@ public class Main {
 	public static GUI_Thread graphic_thread;
 	public static InetAddress local_host;
 	public static boolean connected = false;
+	public static boolean connecting = false;
 	public static Scanner reader = new Scanner(System.in);  // Reading from System.in
 	public static fenetre frame_gui;
 	public static Connect_thread connect;
@@ -81,6 +82,7 @@ public class Main {
 	
 	
 	public static void Connect() {
+		connecting = true;
 		Thread t = new Thread(connect);
 		t.start();
 	}

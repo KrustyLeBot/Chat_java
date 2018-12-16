@@ -5,6 +5,7 @@ import java.io.IOException;
 public class Connect_thread  implements Runnable{
 
 	public void run() {
+		Main.connecting = true;
 		//send a check in broadcast askinf for an aswer
 		Main.msg_sender.sendCheckAll(Main.blank, true);
 		
@@ -26,9 +27,11 @@ public class Connect_thread  implements Runnable{
 			System.out.println("All users on the network added to the Hashmap");
 			System.out.println(Main.hm_users.toString());
 			
+			Main.connecting = false;
 			Main.connected = true;
 		}
 		else {
+			Main.connecting = false;
 			Main.connected = false;
 		}
 		
