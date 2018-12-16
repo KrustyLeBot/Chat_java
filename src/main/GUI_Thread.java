@@ -33,11 +33,13 @@ public class GUI_Thread implements Runnable{
 					//If it is check not asking an answer
 					else if(!message.need_an_answer) {
 						//Then add the user to the list of connected people
-						Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
-						System.out.println("User added: " + message.getEmetteur().pseudo);
-						
-						DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
-						model.addRow(new Object[]{message.getEmetteur().pseudo});
+						if(Main.connected) {
+							Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
+							System.out.println("User added: " + message.getEmetteur().pseudo);
+							
+							DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
+							model.addRow(new Object[]{message.getEmetteur().pseudo});
+						}
 					}
 				}
 				
