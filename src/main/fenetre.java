@@ -15,8 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -216,13 +214,7 @@ public class fenetre extends JFrame {
 				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(table.getSelectedRow(), 0));
 			}
 		});
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Users Online"
-			}
-		) {
+		table.setModel(new DefaultTableModel(new Object[][] {},	new String[] {"Users Online"}) {
 			boolean[] columnEditables = new boolean[] {
 				false
 			};

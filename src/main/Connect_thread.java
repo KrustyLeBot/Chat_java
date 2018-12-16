@@ -1,7 +1,5 @@
 package main;
 
-import java.io.IOException;
-
 public class Connect_thread  implements Runnable{
 
 	public void run() {
