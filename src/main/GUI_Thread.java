@@ -14,6 +14,7 @@ public class GUI_Thread implements Runnable{
 		Main.msg_receiver.addNewMessageListener(new NewMessageListener () {
 			@Override public void aMessageHasBeenReceived(Message msg) {
 				
+				if(!Main.connecting | !Main.connected) return;
 				System.out.println("messaged recu de : " + msg.getEmetteur().pseudo);
 				
 				//If the message is from the user itself(like a broadcast) exclude it
@@ -35,13 +36,11 @@ public class GUI_Thread implements Runnable{
 					//If it is check not asking an answer
 					else if(!message.need_an_answer) {
 						//Then add the user to the list of connected people
-						if(Main.connecting | Main.connected) {
-							Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
-							System.out.println("User added: " + message.getEmetteur().pseudo);
+						Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
+						System.out.println("User added: " + message.getEmetteur().pseudo);
 							
-							DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
-							model.addRow(new Object[]{message.getEmetteur().pseudo});
-						}
+						DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
+						model.addRow(new Object[]{message.getEmetteur().pseudo});
 					}
 				}
 				
