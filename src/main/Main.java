@@ -26,6 +26,8 @@ public class Main {
 	public static InetAddress local_host;
 	public static boolean connected = false;
 	public static Scanner reader = new Scanner(System.in);  // Reading from System.in
+	public static fenetre frame_gui;
+	public static Connect_thread connect;
 	
 	
 	public static void main(String[] args) {		
@@ -50,45 +52,20 @@ public class Main {
 		msg_receiver = new UDPReceiver();
 		msg_sender = new UDPSender();
 		graphic_thread = new GUI_Thread();
+		connect = new Connect_thread();
 		
 		//Start the receiver and the GUI
 		StartReceiver();
 		StartGUI_Thread();
-		
-		run();
-	}
-	
-	
-	public static void run() {
-		
-		while(true) {
-			System.out.println("Connexion => 0");
-			System.out.println("Deconnexion => 1");
-			System.out.println("Envoyer un message texte => 2");
-			
-			System.out.println("Choose an action & enter the correct number: ");
-			
-			switch(reader.nextInt()) {
-				case 0:
-					try {Connect();} catch (IOException e) {e.printStackTrace();}
-					break;
-					
-				case 1:
-					Disconnect();
-					break;
-					
-				case 2:
-					System.out.println("Pseudo of the person");
-					String dest = reader.next();
-					System.out.println("Message to send");
-					String msg = reader.next();
-					send_msg(dest,msg);
-					break;
-			}
-			//once finished
-			try {Thread.sleep(2*1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {
+			frame_gui = new fenetre();
+			frame_gui.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
+	
+	
 		
 	//Start The receiver in another thread
 	public static void StartReceiver() {
@@ -102,40 +79,13 @@ public class Main {
 		t.start();
 	}
 	
-	public static int Connect() throws IOException {
-		//send a check in broadcast askinf for an aswer
-		msg_sender.sendCheckAll(blank, true);
-		
-		//Waiting 5 secondes so that everyone can respond
-		try {Thread.sleep(5*1000);} catch (InterruptedException e) {e.printStackTrace();}
-		
-		
-		//Now,Set the pseudo=>has to be unique, and then notify everyone if it is
-		String str = AskPseudo();
-		if(hm_users.get(str) != null) {
-			connected = false;
-			return 0;
-		}
-		set_pseudo(str);
-		
-		
-		if(me != null) {
-			//Broadcast to all you pseudo and ip without asking for and answer
-			msg_sender.sendCheckAll(me, false);
-			
-			System.out.println("All users on the network added to the Hashmap");
-			System.out.println(hm_users.toString());
-			
-			connected = true;
-			return 1;
-		}
-		else {
-			connected = false;
-			return 0;
-		}
-		
+	
+	public static void Connect() {
+		Thread t = new Thread(connect);
+		t.start();
 	}
-	public static void Disconnect() {
+	
+ 	public static void Disconnect() {
 		//Broadcast bye to everybody
 		msg_sender.sendBye(me);
 		try {msg_receiver.interruption();} catch (Throwable e) {e.printStackTrace();}
@@ -168,6 +118,7 @@ public class Main {
 		User des = new User(dest, hm_users.get(dest));
 		
 		msg_sender.sendText(message, me, des);		
+		frame_gui.textPane.setText(frame_gui.textPane.getText() + "Moi -> " + frame_gui.table.getValueAt(frame_gui.table.getSelectedRow(), 0) + " : " + frame_gui.textField.getText() + "\n");
 	}
 	
 	public static InetAddress getLocalAddress() throws SocketException{

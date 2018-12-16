@@ -1,5 +1,7 @@
 package main;
 
+import javax.swing.table.DefaultTableModel;
+
 import Messages.*;
 import network.*;
 
@@ -12,7 +14,7 @@ public class GUI_Thread implements Runnable{
 		Main.msg_receiver.addNewMessageListener(new NewMessageListener () {
 			@Override public void aMessageHasBeenReceived(Message msg) {
 				
-				System.out.println("messaged reçu de : " + msg.getEmetteur().pseudo);
+				System.out.println("messaged recu de : " + msg.getEmetteur().pseudo);
 				
 				//If the message is from the user itself(like a broadcast) exclude it
 				if(msg.getEmetteur().ip.equals(Main.local_host))return;				
@@ -33,6 +35,9 @@ public class GUI_Thread implements Runnable{
 						//Then add the user to the list of connected people
 						Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
 						System.out.println("User added: " + message.getEmetteur().pseudo);
+						
+						DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
+						model.addRow(new Object[]{message.getEmetteur().pseudo});
 					}
 				}
 				
@@ -41,12 +46,23 @@ public class GUI_Thread implements Runnable{
 				else if(msg instanceof MsgGoodbye) {
 					System.out.println("User removed: " + msg.getEmetteur().pseudo);
 					Main.hm_users.remove(msg.getEmetteur().pseudo);
+					
+					
+					//Pour supprimer un utilisateur de la table 
+					DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
+					for (int i = model.getRowCount() - 1; i >= 0; --i) {
+						if (model.getValueAt(i, 0).equals(msg.getEmetteur().pseudo)) {
+							model.removeRow(i);
+			            }
+					}
 				}
 				
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
 					System.out.println("Message receive from "+ msg.getEmetteur().pseudo);
 					System.out.println(msg.toTxt());
+					
+					Main.frame_gui.textPane.setText(Main.frame_gui.textPane.getText() + msg.getEmetteur().pseudo + " -> Moi : " + msg.toTxt() + "\n");
 				}
 			}
 		});
