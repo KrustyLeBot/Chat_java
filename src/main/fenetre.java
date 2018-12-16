@@ -125,7 +125,6 @@ public class fenetre extends JFrame {
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
 					for (int i = model.getRowCount() - 1; i >= 0; --i) {
 						model.removeRow(i);
-			        	}
 					}
 				}
 			}
