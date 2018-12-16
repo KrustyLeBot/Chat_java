@@ -121,6 +121,12 @@ public class fenetre extends JFrame {
 					btnDeconnexion.setEnabled(false);
 					textField_1.setEnabled(true);
 					btnEnvoyer.setEnabled(false);
+					
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					for (int i = model.getRowCount() - 1; i >= 0; --i) {
+						model.removeRow(i);
+			        	}
+					}
 				}
 			}
 		});

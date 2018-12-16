@@ -14,10 +14,10 @@ public class GUI_Thread implements Runnable{
 		Main.msg_receiver.addNewMessageListener(new NewMessageListener () {
 			@Override public void aMessageHasBeenReceived(Message msg) {
 				
+				System.out.println("messaged recu de : " + msg.getEmetteur().pseudo);
+				
 				//If the message is from the user itself(like a broadcast) exclude it
 				if(msg.getEmetteur().ip.equals(Main.local_host))return;	
-				
-				System.out.println("messaged recu de : " + msg.getEmetteur().pseudo);
 				
 				//First, message paring and casting to the correct type
 				//If the message is a check
