@@ -14,7 +14,8 @@ public class GUI_Thread implements Runnable{
 		Main.msg_receiver.addNewMessageListener(new NewMessageListener () {
 			@Override public void aMessageHasBeenReceived(Message msg) {
 				
-				if(!Main.connecting | !Main.connected) return;
+				if(!(Main.connecting | Main.connected)) return;
+				
 				System.out.println("messaged recu de : " + msg.getEmetteur().pseudo);
 				
 				//If the message is from the user itself(like a broadcast) exclude it
