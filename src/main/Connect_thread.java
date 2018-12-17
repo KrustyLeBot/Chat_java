@@ -9,8 +9,8 @@ public class Connect_thread  implements Runnable{
 		//send a check in broadcast askinf for an aswer
 		Main.msg_sender.sendCheckAll(Main.blank, true);
 		
-		//Waiting 5 secondes so that everyone can respond
-		try {Thread.sleep(5*1000);} catch (InterruptedException e) {e.printStackTrace();}
+		//Waiting 2 secondes so that everyone can respond
+		try {Thread.sleep(2*1000);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		
 		//Now,Set the pseudo=>has to be unique, and then notify everyone if it is
@@ -22,7 +22,11 @@ public class Connect_thread  implements Runnable{
 		
 		if(Main.me != null) {
 			//Broadcast to all you pseudo and ip without asking for and answer
+			System.out.println("Broadcast my pseudo to everyone");
 			Main.msg_sender.sendCheckAll(Main.me, false);
+			Main.msg_sender.sendCheckAll(Main.me, false);
+			Main.msg_sender.sendCheckAll(Main.me, false);
+			
 			
 			System.out.println("All users on the network added to the Hashmap");
 			System.out.println(Main.hm_users.toString());
