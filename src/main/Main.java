@@ -82,8 +82,9 @@ public class Main {
 	
  	public static void Disconnect() {
 		//Broadcast bye to everybody
- 		hm_users.clear();
 		msg_sender.sendBye(me);
+		hm_users.clear();
+		hm_users.put(broadcast.pseudo, broadcast.ip);
 		connecting = false;
 		connected = false;
 		try {msg_receiver.interruption();} catch (Throwable e) {e.printStackTrace();}
