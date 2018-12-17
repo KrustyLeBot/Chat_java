@@ -63,6 +63,14 @@ public class GUI_Thread implements Runnable{
 				
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
+				
+					if(!Main.hm_users.containsKey(msg.getEmetteur().pseudo)) {
+						Main.hm_users.put(msg.getEmetteur().pseudo, msg.getEmetteur().ip);
+						
+						DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
+						model.addRow(new Object[]{msg.getEmetteur().pseudo});
+					}
+					
 					System.out.println("Message receive from "+ msg.getEmetteur().pseudo);
 					System.out.println(msg.toTxt());
 					
