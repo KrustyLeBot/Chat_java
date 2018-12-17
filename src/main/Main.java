@@ -82,6 +82,7 @@ public class Main {
 	
  	public static void Disconnect() {
 		//Broadcast bye to everybody
+ 		hm_users.clear();
 		msg_sender.sendBye(me);
 		connecting = false;
 		connected = false;

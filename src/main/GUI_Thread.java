@@ -80,7 +80,7 @@ public class GUI_Thread implements Runnable{
 					System.out.println("Message receive from "+ msg.getEmetteur().pseudo);
 					System.out.println(msg.toTxt());
 					
-					Main.frame_gui.textPane.setText(Main.frame_gui.textPane.getText() + msg.getEmetteur().pseudo + " -> Moi : " + msg.toTxt() + "\n");
+					Main.frame_gui.textPane.setText(Main.frame_gui.textPane.getText() + msg.getHorodatation() + " : " + msg.getEmetteur().pseudo + " -> Moi : " + msg.toTxt() + "\n");
 				}
 			}
 		});
