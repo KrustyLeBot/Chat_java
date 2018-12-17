@@ -46,18 +46,25 @@ public class GUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GUI() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent arg0) {
-				if(Main.connected | Main.connecting) Main.Disconnect();
-			}
-		});
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 590, 381);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		
+		
+		//Closed window process
+		addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e) {
+				System.out.println("Closed");
+				Main.Disconnect();
+				
+				e.getWindow().dispose();
+			}
+		});
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -85,11 +92,7 @@ public class GUI extends JFrame {
 					}
 				}catch (Exception e) {
 					System.out.println("pas d'utilisateur selectionn�");
-				}
-				
-
-				
-				
+				}				
 			}
 		});
 		
@@ -221,6 +224,9 @@ public class GUI extends JFrame {
 				//Renvoie l'utilisateur selectionn� dans la table
 				System.out.println(table.getValueAt(table.getSelectedRow(), 0));
 				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(table.getSelectedRow(), 0));
+				
+				//Change conversation string from main window
+				textPane.setText(Save_msg.conversations.get(table.getValueAt(table.getSelectedRow(), 0)));
 			}
 		});
 		table.setModel(new DefaultTableModel(new Object[][] {},	new String[] {"Users Online"}) {

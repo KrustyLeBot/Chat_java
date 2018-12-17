@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,19 +14,20 @@ import network.*;
 
 public class Main {
 
-	public static UDPSender msg_sender;
+	public static UDPSender msg_sender = new UDPSender();
 	public static UDPReceiver msg_receiver;
 	public static Map<String,InetAddress> hm_users;
 	public static User me = null;
 	public static User blank = null;
 	public static User broadcast = null;
-	public static GUI_Thread graphic_thread;
+	public static GUI_Thread graphic_thread = new GUI_Thread();
 	public static InetAddress local_host;
 	public static boolean connected = false;
 	public static boolean connecting = false;
 	public static Scanner reader = new Scanner(System.in);  // Reading from System.in
-	public static GUI frame_gui;
-	public static Connect_thread connect;
+	public static GUI frame_gui = new GUI();
+	public static Connect_thread connect = new Connect_thread();
+	public static Save_msg save;
 	
 	
 	public static void main(String[] args) {		
@@ -45,14 +47,9 @@ public class Main {
 		broadcast = new User("BROADCAST", addr);
 		hm_users.put(broadcast.pseudo, broadcast.ip);
 		
-		
-		//Creation of UDP interfaces & GUI thread
-		msg_sender = new UDPSender();
-		graphic_thread = new GUI_Thread();
-		connect = new Connect_thread();
+		save = new Save_msg();
 		
 		try {
-			frame_gui = new GUI();
 			frame_gui.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,8 +114,18 @@ public class Main {
 		
 		User des = new User(dest, hm_users.get(dest));
 		
-		msg_sender.sendText(message, me, des);		
-		frame_gui.textPane.setText(frame_gui.textPane.getText() + "Moi -> " + frame_gui.table.getValueAt(frame_gui.table.getSelectedRow(), 0) + " : " + frame_gui.textField.getText() + "\n");
+		msg_sender.sendText(message, me, des);	
+		
+		
+		String entete = null;
+		if(!Save_msg.conversations.containsKey(dest)) entete="";
+		else entete = Save_msg.conversations.get(dest);
+		
+		String msg = (new Date()).toString() + " : " + "Moi -> " + frame_gui.table.getValueAt(frame_gui.table.getSelectedRow(), 0) + " : \n" + frame_gui.textField.getText() + "\n\n";
+		frame_gui.textPane.setText(entete+msg);
+		
+		Save_msg.conversations.remove(dest);
+		Save_msg.conversations.put(dest, entete+msg);	
 	}
 	
 	public static InetAddress getLocalAddress() throws SocketException{

@@ -14,8 +14,9 @@ public class Connect_thread  implements Runnable{
 		
 		
 		//Now,Set the pseudo=>has to be unique, and then notify everyone if it is
-		if(Main.hm_users.get(Main.frame_gui.textField_1.getText()) != null) {
+		if(Main.hm_users.containsKey(Main.frame_gui.textField_1.getText())) {
 			Main.connected = false;
+			return;
 		}
 		Main.set_pseudo(Main.frame_gui.textField_1.getText());
 		

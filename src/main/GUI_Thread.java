@@ -80,7 +80,19 @@ public class GUI_Thread implements Runnable{
 					System.out.println("Message receive from "+ msg.getEmetteur().pseudo);
 					System.out.println(msg.toTxt());
 					
-					Main.frame_gui.textPane.setText(Main.frame_gui.textPane.getText() + msg.getHorodatation() + " : " + msg.getEmetteur().pseudo + " -> Moi : " + msg.toTxt() + "\n");
+					String entete = null;
+					if(!Save_msg.conversations.containsKey(msg.getEmetteur().pseudo)) entete="";
+					else entete = Save_msg.conversations.get(msg.getEmetteur().pseudo);
+					
+					String str = entete + (msg.getHorodatation() + " : " + msg.getEmetteur().pseudo + " -> Moi : \n" + msg.toTxt() + "\n\n");
+					Save_msg.conversations.remove(msg.getEmetteur().pseudo);
+					Save_msg.conversations.put(msg.getEmetteur().pseudo, str);
+					
+					if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo)) {
+						Main.frame_gui.textPane.setText(str);
+					}
+					
+					Save_msg.Save_messages();
 				}
 			}
 		});
