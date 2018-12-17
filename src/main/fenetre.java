@@ -68,8 +68,9 @@ public class fenetre extends JFrame {
 						System.out.println("Envoi du message " + textField.getText() + " � " + table.getValueAt(table.getSelectedRow(), 0));
 						//TODO
 						//Appeler la m�thode send_msg
-						textField.setText("");
+						
 						Main.send_msg((String) table.getValueAt(table.getSelectedRow(), 0),textField.getText());
+						textField.setText("");
 					}
 					else {
 						System.out.println("Rentrer du texte avant d'envoyer le message");
