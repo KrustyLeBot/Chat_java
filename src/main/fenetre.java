@@ -61,21 +61,21 @@ public class fenetre extends JFrame {
 		btnEnvoyer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Appui sur envoyer");
-				//Try pour vérifier qu'un utilisateur est bien selectionné
+				//Try pour vï¿½rifier qu'un utilisateur est bien selectionnï¿½
 				try {
-					//On vérifie qu'un message est bien écrit
+					//On vï¿½rifie qu'un message est bien ï¿½crit
 					if (!textField.getText().equals("")) { 
-						System.out.println("Envoi du message " + textField.getText() + " à " + table.getValueAt(table.getSelectedRow(), 0));
+						System.out.println("Envoi du message " + textField.getText() + " ï¿½ " + table.getValueAt(table.getSelectedRow(), 0));
 						//TODO
-						//Appeler la méthode send_msg
-						
+						//Appeler la mï¿½thode send_msg
+						textField.setText("");
 						Main.send_msg((String) table.getValueAt(table.getSelectedRow(), 0),textField.getText());
 					}
 					else {
 						System.out.println("Rentrer du texte avant d'envoyer le message");
 					}
 				}catch (Exception e) {
-					System.out.println("pas d'utilisateur selectionné");
+					System.out.println("pas d'utilisateur selectionnï¿½");
 				}
 				
 
@@ -92,7 +92,7 @@ public class fenetre extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("connexion de " + textField_1.getText());
 				//TODO
-				//Appeler la méthode Connect
+				//Appeler la mï¿½thode Connect
 				
 				btnDeconnexion.setEnabled(false);
 				btnConnexion.setEnabled(false);
@@ -110,7 +110,7 @@ public class fenetre extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("deconnexion");
 				//TODO
-				//Appeler la méthode Disconnect
+				//Appeler la mï¿½thode Disconnect
 				//Disconnect();
 				
 				if(Main.connected) {
@@ -205,11 +205,11 @@ public class fenetre extends JFrame {
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		textPane.setLayout(new BorderLayout());
 		table = new JTable();
-		//Action à effectuer quand on clique sur la table
+		//Action ï¿½ effectuer quand on clique sur la table
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//Renvoie l'utilisateur selectionné dans la table
+				//Renvoie l'utilisateur selectionnï¿½ dans la table
 				System.out.println(table.getValueAt(table.getSelectedRow(), 0));
 				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(table.getSelectedRow(), 0));
 			}
