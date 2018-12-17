@@ -47,14 +47,10 @@ public class Main {
 		
 		
 		//Creation of UDP interfaces & GUI thread
-		msg_receiver = new UDPReceiver();
 		msg_sender = new UDPSender();
 		graphic_thread = new GUI_Thread();
 		connect = new Connect_thread();
 		
-		//Start the receiver and the GUI
-		StartReceiver();
-		StartGUI_Thread();
 		try {
 			frame_gui = new fenetre();
 			frame_gui.setVisible(true);
@@ -67,6 +63,7 @@ public class Main {
 		
 	//Start The receiver in another thread
 	public static void StartReceiver() {
+		msg_receiver = new UDPReceiver();
 		Thread t = new Thread(msg_receiver);
 		t.start();
 	}
@@ -86,6 +83,8 @@ public class Main {
  	public static void Disconnect() {
 		//Broadcast bye to everybody
 		msg_sender.sendBye(me);
+		connecting = false;
+		connected = false;
 		try {msg_receiver.interruption();} catch (Throwable e) {e.printStackTrace();}
 	}
 	

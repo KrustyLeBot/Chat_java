@@ -3,6 +3,8 @@ package main;
 public class Connect_thread  implements Runnable{
 
 	public void run() {
+		Main.StartReceiver();
+		Main.StartGUI_Thread();
 		Main.connecting = true;
 		//send a check in broadcast askinf for an aswer
 		Main.msg_sender.sendCheckAll(Main.blank, true);
