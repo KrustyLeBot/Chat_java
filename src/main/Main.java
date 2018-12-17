@@ -86,6 +86,7 @@ public class Main {
 		connecting = false;
 		connected = false;
 		try {msg_receiver.interruption();} catch (Throwable e) {e.printStackTrace();}
+		msg_receiver.closeSocket();
 	}
 	
 	//Ask for a pseudo
