@@ -24,7 +24,7 @@ public class Main {
 	public static boolean connected = false;
 	public static boolean connecting = false;
 	public static Scanner reader = new Scanner(System.in);  // Reading from System.in
-	public static fenetre frame_gui;
+	public static GUI frame_gui;
 	public static Connect_thread connect;
 	
 	
@@ -52,7 +52,7 @@ public class Main {
 		connect = new Connect_thread();
 		
 		try {
-			frame_gui = new fenetre();
+			frame_gui = new GUI();
 			frame_gui.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
