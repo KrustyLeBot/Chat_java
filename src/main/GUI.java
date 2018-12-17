@@ -21,8 +21,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class fenetre extends JFrame {
+public class GUI extends JFrame {
 
 	/**
 	 * 
@@ -43,7 +45,13 @@ public class fenetre extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public fenetre() {
+	public GUI() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				if(Main.connected | Main.connecting) Main.Disconnect();
+			}
+		});
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 590, 381);
