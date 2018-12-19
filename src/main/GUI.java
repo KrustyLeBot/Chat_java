@@ -252,6 +252,7 @@ public class GUI extends JFrame {
 				String str = ((String) table.getValueAt(table.getSelectedRow(), 0)).replace("** ", "");
 				System.out.println(str);
 				table.setValueAt(str, i, 0);
+				
 				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(i, 0));
 				
 				//Change conversation string from main window
