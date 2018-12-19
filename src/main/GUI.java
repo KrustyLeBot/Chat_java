@@ -59,7 +59,8 @@ public class GUI extends JFrame {
 		{
 			public void windowClosing(WindowEvent e) {
 				System.out.println("Closed");
-				Main.Disconnect();
+				
+				if(Main.connected | Main.connecting) Main.Disconnect();
 				
 				e.getWindow().dispose();
 			}
@@ -69,6 +70,7 @@ public class GUI extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Send message when enter is pressed while editing message textfield
@@ -118,7 +120,6 @@ public class GUI extends JFrame {
 				}				
 			}
 		});
-		
 		
 		
 		
