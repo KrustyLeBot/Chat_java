@@ -9,8 +9,8 @@ public class Connect_thread  implements Runnable{
 		//send a check in broadcast askinf for an aswer
 		Main.msg_sender.sendCheckAll(Main.blank, true);
 		
-		//Waiting 2 secondes so that everyone can respond
-		try {Thread.sleep(2*1000);} catch (InterruptedException e) {e.printStackTrace();}
+		//Waiting 1 secondes so that everyone can respond
+		try {Thread.sleep(1*1000);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		
 		//Now,Set the pseudo=>has to be unique, and then notify everyone if it is

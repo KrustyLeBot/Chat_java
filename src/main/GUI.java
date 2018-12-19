@@ -247,8 +247,8 @@ public class GUI extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//Renvoie l'utilisateur selectionn� dans la table
-				System.out.println(table.getValueAt(table.getSelectedRow(), 0));
+				//Renvoie l'utilisateur selectionne dans la table
+				table.setValueAt(new Object[]{table.getValueAt(table.getSelectedRow(), 0).toString().replace("** ", "")}, table.getSelectedRow(), 0);
 				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(table.getSelectedRow(), 0));
 				
 				//Change conversation string from main window

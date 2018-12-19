@@ -70,10 +70,10 @@ public class GUI_Thread implements Runnable{
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
 				
+					DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
+					
 					if(!Main.hm_users.containsKey(msg.getEmetteur().pseudo)) {
-						Main.hm_users.put(msg.getEmetteur().pseudo, msg.getEmetteur().ip);
-						
-						DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
+						Main.hm_users.put(msg.getEmetteur().pseudo, msg.getEmetteur().ip);						
 						model.addRow(new Object[]{msg.getEmetteur().pseudo});
 					}
 					
@@ -92,6 +92,15 @@ public class GUI_Thread implements Runnable{
 					if(i != -1) {
 						if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo)) {
 							Main.frame_gui.textPane.setText(str);
+						}
+						else {
+							//Notify the user from who he get a new message
+							for (int j = Main.frame_gui.table.getRowCount() - 1; i >= 0; --i) {
+								if (model.getValueAt(i, 0).equals(msg.getEmetteur().pseudo)) {
+									//add ** in front of people whith notification
+									Main.frame_gui.table.setValueAt(new Object[]{"** " + msg.getEmetteur().pseudo}, i, 0);
+					            }
+							}
 						}
 					}					
 					Save_msg.Save_messages();
