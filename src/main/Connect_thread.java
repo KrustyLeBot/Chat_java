@@ -25,8 +25,6 @@ public class Connect_thread  implements Runnable{
 			//Broadcast to all you pseudo and ip without asking for and answer
 			System.out.println("Broadcast my pseudo to everyone");
 			Main.msg_sender.sendCheckAll(Main.me, false);
-			Main.msg_sender.sendCheckAll(Main.me, false);
-			Main.msg_sender.sendCheckAll(Main.me, false);
 			
 			
 			System.out.println("All users on the network added to the Hashmap");
