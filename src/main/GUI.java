@@ -69,6 +69,29 @@ public class GUI extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		textField = new JTextField();
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Send message when enter is pressed while editing message textfield
+				System.out.println("Appui sur envoyer");
+				//Try pour verifier qu'un utilisateur est bien selectionne
+				try {
+					//On verifie qu'un message est bien ecrit
+					if (!textField.getText().equals("")) { 
+						System.out.println("Envoi du message " + textField.getText() + " : " + table.getValueAt(table.getSelectedRow(), 0));
+						//TODO
+						//Appeler la methode send_msg
+						
+						Main.send_msg((String) table.getValueAt(table.getSelectedRow(), 0),textField.getText());
+						textField.setText("");
+					}
+					else {
+						System.out.println("Rentrer du texte avant d'envoyer le message");
+					}
+				}catch (Exception e1) {
+					System.out.println("pas d'utilisateur selectionne");
+				}	
+			}
+		});
 		textField.setColumns(10);
 		
 		btnEnvoyer = new JButton("Envoyer");
@@ -76,13 +99,13 @@ public class GUI extends JFrame {
 		btnEnvoyer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Appui sur envoyer");
-				//Try pour v�rifier qu'un utilisateur est bien selectionn�
+				//Try pour verifier qu'un utilisateur est bien selectionne
 				try {
-					//On v�rifie qu'un message est bien �crit
+					//On verifie qu'un message est bien ecrit
 					if (!textField.getText().equals("")) { 
-						System.out.println("Envoi du message " + textField.getText() + " � " + table.getValueAt(table.getSelectedRow(), 0));
+						System.out.println("Envoi du message " + textField.getText() + " : " + table.getValueAt(table.getSelectedRow(), 0));
 						//TODO
-						//Appeler la m�thode send_msg
+						//Appeler la methode send_msg
 						
 						Main.send_msg((String) table.getValueAt(table.getSelectedRow(), 0),textField.getText());
 						textField.setText("");
@@ -142,6 +165,19 @@ public class GUI extends JFrame {
 				
 		
 		textField_1 = new JTextField();
+		textField_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//Connect when enter is pressed from pseudo text field
+				System.out.println("connexion de " + textField_1.getText());
+				//TODO
+				//Appeler la methode Connect
+				
+				btnDeconnexion.setEnabled(false);
+				btnConnexion.setEnabled(false);
+
+				Main.Connect();
+			}
+		});
 		textField_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
