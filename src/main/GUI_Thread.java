@@ -97,9 +97,9 @@ public class GUI_Thread implements Runnable{
 							//Notify the user from who he get a new message
 							for (int j = Main.frame_gui.table.getRowCount() - 1; i >= 0; --i) {
 								if (model.getValueAt(i, 0).equals(msg.getEmetteur().pseudo)) {
-									//add ** in front of people whith notification
-									model.setValueAt(new Object[]{"** " + msg.getEmetteur().pseudo}, i, 0);
-					            }
+									//Notification
+									
+									}
 							}
 						}
 					}					

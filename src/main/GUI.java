@@ -248,15 +248,10 @@ public class GUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//Renvoie l'utilisateur selectionne dans la table
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				int i = table.getSelectedRow();
-				String str = ((String) table.getValueAt(table.getSelectedRow(), 0)).replace("** ", "");
-				model.setValueAt(new Object[]{str}, i, 0);
-				
-				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(i, 0));
+				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(table.getSelectedRow(), 0));
 				
 				//Change conversation string from main window
-				textPane.setText(Save_msg.conversations.get(table.getValueAt(i, 0)));
+				textPane.setText(Save_msg.conversations.get(table.getValueAt(table.getSelectedRow(), 0)));
 			}
 		});
 		table.setModel(new DefaultTableModel(new Object[][] {},	new String[] {"Users Online"}) {
