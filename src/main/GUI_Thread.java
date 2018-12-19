@@ -88,10 +88,12 @@ public class GUI_Thread implements Runnable{
 					Save_msg.conversations.remove(msg.getEmetteur().pseudo);
 					Save_msg.conversations.put(msg.getEmetteur().pseudo, str);
 					
-					if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo)) {
-						Main.frame_gui.textPane.setText(str);
-					}
-					
+					int i = Main.frame_gui.table.getSelectedRow();
+					if(i != -1) {
+						if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo)) {
+							Main.frame_gui.textPane.setText(str);
+						}
+					}					
 					Save_msg.Save_messages();
 				}
 			}
