@@ -128,7 +128,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("connexion de " + textField_1.getText());
 				//TODO
-				//Appeler la m�thode Connect
+				//Appeler la methode Connect
 				
 				btnDeconnexion.setEnabled(false);
 				btnConnexion.setEnabled(false);
@@ -168,20 +168,6 @@ public class GUI extends JFrame {
 				
 		
 		textField_1 = new JTextField();
-		textField_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//Connect when enter is pressed from pseudo text field
-				System.out.println("connexion de " + textField_1.getText());
-				//TODO
-				//Appeler la methode Connect
-				
-				btnDeconnexion.setEnabled(false);
-				btnConnexion.setEnabled(false);
-
-				Main.Connect();
-				textField.setEnabled(true);
-			}
-		});
 		textField_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
