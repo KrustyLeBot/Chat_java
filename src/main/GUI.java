@@ -134,6 +134,7 @@ public class GUI extends JFrame {
 				btnConnexion.setEnabled(false);
 
 				Main.Connect();
+				textField.setEnabled(true);
 			}
 		});
 		
@@ -155,6 +156,7 @@ public class GUI extends JFrame {
 					btnDeconnexion.setEnabled(false);
 					textField_1.setEnabled(true);
 					btnEnvoyer.setEnabled(false);
+					textField.setEnabled(false);
 					
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
 					for (int i = model.getRowCount() - 1; i >= 0; --i) {
@@ -177,6 +179,7 @@ public class GUI extends JFrame {
 				btnConnexion.setEnabled(false);
 
 				Main.Connect();
+				textField.setEnabled(true);
 			}
 		});
 		textField_1.addKeyListener(new KeyAdapter() {
