@@ -186,6 +186,17 @@ public class GUI extends JFrame {
 		
 		JLabel lblPseudo = new JLabel("Pseudo :");
 		
+		JButton btnFlushMessages = new JButton("Flush");
+		btnFlushMessages.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//Flush all communication displayed & saved
+				Save_msg.conversations.clear();
+				Save_msg.Save_messages();
+				Main.frame_gui.textPane.setText("");
+			}
+		});
+		btnFlushMessages.setEnabled(false);
+		
 		
 		
 		
@@ -214,27 +225,36 @@ public class GUI extends JFrame {
 								.addGap(11)))
 						.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 440, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(12)
+							.addComponent(btnFlushMessages, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(3)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnDeconnexion)
-						.addComponent(btnConnexion)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPseudo))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblChoisirUnCorrespondant)
-					.addGap(5)
-					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(scrollPane, 0, 0, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(3)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnDeconnexion)
+								.addComponent(btnConnexion)
+								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblPseudo))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblChoisirUnCorrespondant)
+							.addGap(5)
+							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnEnvoyer)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnEnvoyer)
+							.addComponent(btnFlushMessages)))
 					.addContainerGap())
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
 		);
 		
 		textPane = new JTextPane();
