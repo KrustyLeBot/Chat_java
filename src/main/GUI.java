@@ -195,7 +195,8 @@ public class GUI extends JFrame {
 				Main.frame_gui.textPane.setText("");
 			}
 		});
-		btnFlushMessages.setEnabled(false);
+		
+		btnFlushMessages.setEnabled(true);
 		
 		
 		
