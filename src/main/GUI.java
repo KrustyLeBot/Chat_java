@@ -273,6 +273,12 @@ public class GUI extends JFrame {
 				
 				//Change conversation string from main window
 				textPane.setText(Save_msg.conversations.get(table.getValueAt(table.getSelectedRow(), 0)));
+				
+				//gestion des utilisateur avec "** " -> supprimer la notification quand on clique dessus
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				int j = table.getSelectedRow();
+				model.setValueAt((model.getValueAt(j, 0)).toString().replaceAll("** ", ""), j, 0);
+				
 			}
 		});
 		table.setModel(new DefaultTableModel(new Object[][] {},	new String[] {"Users Online"}) {

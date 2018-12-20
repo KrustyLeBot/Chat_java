@@ -95,10 +95,10 @@ public class GUI_Thread implements Runnable{
 						}
 						else {
 							//Notify the user from who he get a new message
-							for (int j = Main.frame_gui.table.getRowCount() - 1; i >= 0; --i) {
-								if (model.getValueAt(i, 0).equals(msg.getEmetteur().pseudo)) {
+							for (int i1 = Main.frame_gui.table.getRowCount() - 1; i1 >= 0; --i1) {
+								if (model.getValueAt(i1, 0).equals(msg.getEmetteur().pseudo)) {
 									//Notification
-									
+										model.setValueAt("** " + model.getValueAt(i1, 0), i1, 0);
 									}
 							}
 						}
