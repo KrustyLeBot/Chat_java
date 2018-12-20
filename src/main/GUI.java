@@ -96,7 +96,7 @@ public class GUI extends JFrame {
 		});
 		textField.setColumns(10);
 		
-		btnEnvoyer = new JButton("Envoyer");
+		btnEnvoyer = new JButton("Send");
 		btnEnvoyer.setEnabled(false);
 		btnEnvoyer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -123,7 +123,7 @@ public class GUI extends JFrame {
 		
 		
 		
-		btnConnexion = new JButton("Connexion");
+		btnConnexion = new JButton("Connect");
 		btnConnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("connexion de " + textField_1.getText());
@@ -140,9 +140,9 @@ public class GUI extends JFrame {
 		
 		btnConnexion.setEnabled(false);
 				
-		JLabel lblChoisirUnCorrespondant = new JLabel("Choisir un correspondant");
+		JLabel lblChoisirUnCorrespondant = new JLabel("Choose a recipient");
 		
-		btnDeconnexion = new JButton("Deconnexion");
+		btnDeconnexion = new JButton("Disconnect");
 		btnDeconnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("deconnexion");
@@ -268,16 +268,16 @@ public class GUI extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//Renvoie l'utilisateur selectionne dans la table
-				lblChoisirUnCorrespondant.setText("Conversation avec " + table.getValueAt(table.getSelectedRow(), 0));
-				
-				//Change conversation string from main window
-				textPane.setText(Save_msg.conversations.get(table.getValueAt(table.getSelectedRow(), 0)));
-				
 				//gestion des utilisateur avec "** " -> supprimer la notification quand on clique dessus
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				int j = table.getSelectedRow();
 				model.setValueAt(((String) model.getValueAt(j, 0)).replace("** ", ""), j, 0);
+				
+				//Renvoie l'utilisateur selectionne dans la table
+				lblChoisirUnCorrespondant.setText("Conversation with " + table.getValueAt(table.getSelectedRow(), 0));
+				
+				//Change conversation string from main window
+				textPane.setText(Save_msg.conversations.get(table.getValueAt(table.getSelectedRow(), 0)));
 				
 			}
 		});

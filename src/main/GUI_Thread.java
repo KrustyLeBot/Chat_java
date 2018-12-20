@@ -93,16 +93,15 @@ public class GUI_Thread implements Runnable{
 						if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo)) {
 							Main.frame_gui.textPane.setText(str);
 						}
-						else {
-							//Notify the user from who he get a new message
-							for (int i1 = Main.frame_gui.table.getRowCount() - 1; i1 >= 0; --i1) {
-								if (model.getValueAt(i1, 0).equals(msg.getEmetteur().pseudo)) {
-									//Notification
-										model.setValueAt("** " + model.getValueAt(i1, 0), i1, 0);
-									}
-							}
-						}
-					}					
+					}	
+					
+					//Notify the user from who he get a new message
+					for (int i1 = Main.frame_gui.table.getRowCount() - 1; i1 >= 0; --i1) {
+						//Notification
+						System.out.println("On Notifie");
+						model.setValueAt("** " + model.getValueAt(i1, 0), i1, 0);
+					}
+					
 					Save_msg.Save_messages();
 				}
 			}
