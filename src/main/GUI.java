@@ -277,7 +277,7 @@ public class GUI extends JFrame {
 				//gestion des utilisateur avec "** " -> supprimer la notification quand on clique dessus
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				int j = table.getSelectedRow();
-				model.setValueAt((model.getValueAt(j, 0)).toString().replaceAll("** ", ""), j, 0);
+				model.setValueAt(((String) model.getValueAt(j, 0)).replace("** ", ""), j, 0);
 				
 			}
 		});
