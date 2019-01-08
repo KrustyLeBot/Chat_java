@@ -204,7 +204,7 @@ public class GUI extends JFrame {
 		button = new JButton("<HTML><BODY>Change<BR>pseudo</BODY></HTML>");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+		
 				do {
 					JOptionPane jop = new JOptionPane();
 					String nom = jop.showInputDialog(null, "Veuillez indiquer votre nouveau pseudo : ", "Changement de pseudo", JOptionPane.QUESTION_MESSAGE);
