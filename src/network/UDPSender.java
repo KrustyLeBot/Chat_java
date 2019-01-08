@@ -103,6 +103,12 @@ public class UDPSender {
 		this.sendMess(mes);
 	}
 	
+	public void sendNewPseudo(User src, User new_me) {
+		
+		MsgNewPseudo mes = new MsgNewPseudo(src, Main.broadcast, new_me);
+		this.sendMess(mes);
+	}
+	
 	/*
 	 * Send message Text
 	 */

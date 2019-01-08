@@ -20,6 +20,7 @@ public class GUI_Thread implements Runnable{
 				
 				//If the message is from the user itself(like a broadcast) exclude it
 				if(msg.getEmetteur().ip.equals(Main.local_host))return;	
+				DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
 				
 				//First, message paring and casting to the correct type
 				//If the message is a check
@@ -44,8 +45,44 @@ public class GUI_Thread implements Runnable{
 							Main.hm_users.put(message.getEmetteur().pseudo, message.getEmetteur().ip);
 							System.out.println("User added: " + message.getEmetteur().pseudo);
 								
-							DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
 							model.addRow(new Object[]{message.getEmetteur().pseudo});
+						}
+					}
+				}
+				
+				else if(msg instanceof MsgNewPseudo) {
+					System.out.println("Message new pseudo recu");
+					//Remplacer l'ancien user par le nouveau dans les liste d'utilisateurs
+					//connectés et dans la sauvegarde des messages
+					MsgNewPseudo message = (MsgNewPseudo) msg;
+					
+					if(Save_msg.open_conection.containsKey(message.getEmetteur())) {
+						Save_msg.open_conection.remove(message.getEmetteur());
+						Save_msg.open_conection.put(message.new_me, true);
+					}
+					
+					if(Save_msg.conversations.containsKey(message.getEmetteur().pseudo)){
+						String str = Save_msg.conversations.get(message.getEmetteur().pseudo);
+						Save_msg.conversations.remove(message.getEmetteur().pseudo);
+						
+						str.replaceAll(message.getEmetteur().pseudo + " :", message.new_me.pseudo + " :");
+						
+						Save_msg.conversations.put(msg.getEmetteur().pseudo, str);
+						
+						//actualisation du texte si on est entrain de discuter avec la personne
+						int i = Main.frame_gui.table.getSelectedRow();
+						if(i != -1) {
+							if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo)) {
+								Main.frame_gui.textPane.setText(str);
+							}
+						}
+						
+						//modification du pseudo dans la liste des utilisateurs
+						for (int i2 = Main.frame_gui.table.getRowCount() - 1; i2 >= 0; --i2) {
+							//Notification
+							System.out.println("On Notifie");
+							String str2 = (String) model.getValueAt(i2, 0);
+							if(str2.equals(msg.getEmetteur().pseudo)) model.setValueAt(message.new_me.pseudo, i2, 0);
 						}
 					}
 				}
@@ -59,7 +96,6 @@ public class GUI_Thread implements Runnable{
 					
 					
 					//Pour supprimer un utilisateur de la table 
-					DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
 					for (int i = model.getRowCount() - 1; i >= 0; --i) {
 						if (model.getValueAt(i, 0).equals(msg.getEmetteur().pseudo)) {
 							model.removeRow(i);
@@ -69,8 +105,6 @@ public class GUI_Thread implements Runnable{
 				
 				//If the message is a text message
 				else if(msg instanceof MsgTxt) {
-				
-					DefaultTableModel model = (DefaultTableModel) Main.frame_gui.table.getModel();
 					
 					if(!Main.hm_users.containsKey(msg.getEmetteur().pseudo)) {
 						Main.hm_users.put(msg.getEmetteur().pseudo, msg.getEmetteur().ip);						
@@ -99,7 +133,8 @@ public class GUI_Thread implements Runnable{
 					for (int i1 = Main.frame_gui.table.getRowCount() - 1; i1 >= 0; --i1) {
 						//Notification
 						System.out.println("On Notifie");
-						model.setValueAt("** " + model.getValueAt(i1, 0), i1, 0);
+						String str1 = (String) model.getValueAt(i1, 0);
+						if(str1.equals(msg.getEmetteur().pseudo)) model.setValueAt("** " + str1, i1, 0);
 					}
 					
 					Save_msg.Save_messages();
