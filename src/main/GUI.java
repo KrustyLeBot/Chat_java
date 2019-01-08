@@ -21,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -39,6 +41,7 @@ public class GUI extends JFrame {
 	public JTextField textField_1;
 	public JScrollPane scrollPane_1;
 	public JTextPane textPane;
+	private JButton button;
 
 
 
@@ -48,7 +51,7 @@ public class GUI extends JFrame {
 	public GUI() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 590, 381);
+		setBounds(100, 100, 590, 408);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -198,6 +201,26 @@ public class GUI extends JFrame {
 		
 		btnFlushMessages.setEnabled(true);
 		
+		button = new JButton("<HTML><BODY>Change<BR>pseudo</BODY></HTML>");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				do {
+					JOptionPane jop = new JOptionPane();
+					String nom = jop.showInputDialog(null, "Veuillez indiquer votre nouveau pseudo : ", "Changement de pseudo", JOptionPane.QUESTION_MESSAGE);
+					System.out.println("Truc rentré : " + nom);
+					if (nom ==null) { 	//Si on clique sur annuler dans la boite de dialogue
+						
+					}
+					/*
+					if (Si le truc rentré est dans la liste des pseudos){	
+						jop2 = new JOptionPane();
+						jop2.showMessageDialog(null, "Ce pseudo est déjà pris", "Attention", JOptionPane.WARNING_MESSAGE);
+					}
+					*/
+				}while(false); //Mettre en condition tant que le pseudo saisi est déjà dans la liste des pseudos
+			}
+		});
+		
 		
 		
 		
@@ -207,31 +230,32 @@ public class GUI extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(textField)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnEnvoyer))
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-									.addComponent(lblChoisirUnCorrespondant)
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(lblPseudo)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(btnConnexion)))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnDeconnexion)
-								.addGap(11)))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 360, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+							.addComponent(btnEnvoyer))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblChoisirUnCorrespondant)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblPseudo)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnConnexion)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnDeconnexion)
+							.addGap(11))
 						.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 440, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(12)
-							.addComponent(btnFlushMessages, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(button)
+								.addComponent(btnFlushMessages))
+							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -251,11 +275,16 @@ public class GUI extends JFrame {
 							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(btnEnvoyer)
-							.addComponent(btnFlushMessages)))
-					.addContainerGap())
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnEnvoyer)
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE))
+							.addGap(46))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(btnFlushMessages, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button)
+							.addContainerGap())))
 		);
 		
 		textPane = new JTextPane();
