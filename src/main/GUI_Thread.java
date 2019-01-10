@@ -65,10 +65,9 @@ public class GUI_Thread implements Runnable{
 						String str = Save_msg.conversations.get(message.getEmetteur().pseudo);
 						Save_msg.conversations.remove(message.getEmetteur().pseudo);
 						
-						str.replaceAll(message.getEmetteur().pseudo + " :", message.new_me.pseudo + " :");
 						str = str + "=== " + message.getEmetteur().pseudo + " became " + message.new_me.pseudo + " ===\n\n";
 						
-						Save_msg.conversations.put(msg.getEmetteur().pseudo, str);
+						Save_msg.conversations.put(message.new_me.pseudo, str);
 						
 						//actualisation du texte si on est entrain de discuter avec la personne et de l'entete
 						int i = Main.frame_gui.table.getSelectedRow();
