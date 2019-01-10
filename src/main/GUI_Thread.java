@@ -139,6 +139,7 @@ public class GUI_Thread implements Runnable{
 						//Notification
 						System.out.println("On Notifie");
 						String str1 = (String) model.getValueAt(i1, 0);
+						if(i1==i & i != -1) return;
 						if(str1.equals(msg.getEmetteur().pseudo)) model.setValueAt("** " + str1, i1, 0);
 					}
 					
