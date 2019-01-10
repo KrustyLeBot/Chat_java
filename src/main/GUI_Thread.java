@@ -101,7 +101,7 @@ public class GUI_Thread implements Runnable{
 					
 					//Pour supprimer un utilisateur de la table 
 					for (int i = model.getRowCount() - 1; i >= 0; --i) {
-						if (model.getValueAt(i, 0).equals(msg.getEmetteur().pseudo)) {
+						if (model.getValueAt(i, 0).equals(msg.getEmetteur().pseudo) | model.getValueAt(i, 0).equals("** "+ msg.getEmetteur().pseudo)) {
 							model.removeRow(i);
 			            }
 					}
