@@ -136,8 +136,8 @@ public class GUI extends JFrame {
 				btnDeconnexion.setEnabled(false);
 				btnConnexion.setEnabled(false);
 
-				Main.Connect();
 				textField.setEnabled(true);
+				Main.Connect();
 			}
 		});
 		
@@ -210,14 +210,16 @@ public class GUI extends JFrame {
 					String nom = jop.showInputDialog(null, "Veuillez indiquer votre nouveau pseudo : ", "Changement de pseudo", JOptionPane.QUESTION_MESSAGE);
 					System.out.println("Truc rentré : " + nom);
 					if (nom ==null) { 	//Si on clique sur annuler dans la boite de dialogue
-						
+						return;
 					}
-					/*
-					if (Si le truc rentré est dans la liste des pseudos){	
-						jop2 = new JOptionPane();
-						jop2.showMessageDialog(null, "Ce pseudo est déjà pris", "Attention", JOptionPane.WARNING_MESSAGE);
+					
+					if(!Main.hm_users.containsKey(nom)) {
+						//procedure de changement de pseudo
+						Main.msg_sender.sendNewPseudo(Main.me, new User(nom, Main.local_host));
+						Main.me.pseudo = nom;
+						return;
 					}
-					*/
+					
 				}while(false); //Mettre en condition tant que le pseudo saisi est déjà dans la liste des pseudos
 			}
 		});
