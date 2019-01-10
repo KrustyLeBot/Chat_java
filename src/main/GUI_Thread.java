@@ -88,6 +88,7 @@ public class GUI_Thread implements Runnable{
 						}
 						Main.hm_users.remove(message.getEmetteur().pseudo);
 						Main.hm_users.put(message.new_me.pseudo, message.new_me.ip);
+						System.out.println(Main.hm_users);
 					}
 				}
 				
@@ -111,6 +112,7 @@ public class GUI_Thread implements Runnable{
 				else if(msg instanceof MsgTxt) {
 					
 					if(!Main.hm_users.containsKey(msg.getEmetteur().pseudo)) {
+						System.out.println(Main.hm_users);
 						Main.hm_users.put(msg.getEmetteur().pseudo, msg.getEmetteur().ip);						
 						model.addRow(new Object[]{msg.getEmetteur().pseudo});
 					}
