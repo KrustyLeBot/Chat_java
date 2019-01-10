@@ -42,6 +42,7 @@ public class GUI extends JFrame {
 	public JScrollPane scrollPane_1;
 	public JTextPane textPane;
 	private JButton button;
+	public JLabel lblChoisirUnCorrespondant;
 
 
 
@@ -143,7 +144,7 @@ public class GUI extends JFrame {
 		
 		btnConnexion.setEnabled(false);
 				
-		JLabel lblChoisirUnCorrespondant = new JLabel("Choose a recipient");
+		lblChoisirUnCorrespondant = new JLabel("Choose a recipient");
 		
 		btnDeconnexion = new JButton("Disconnect");
 		btnDeconnexion.addActionListener(new ActionListener() {
@@ -207,7 +208,7 @@ public class GUI extends JFrame {
 				
 				do {
 					JOptionPane jop = new JOptionPane();
-					String nom = jop.showInputDialog(null, "Veuillez indiquer votre nouveau pseudo : ", "Changement de pseudo", JOptionPane.QUESTION_MESSAGE);
+					String nom = JOptionPane.showInputDialog(null, "Veuillez indiquer votre nouveau pseudo : ", "Changement de pseudo", JOptionPane.QUESTION_MESSAGE);
 					System.out.println("Truc rentré : " + nom);
 					if (nom ==null) { 	//Si on clique sur annuler dans la boite de dialogue
 						return;

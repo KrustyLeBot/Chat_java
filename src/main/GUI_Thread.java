@@ -66,21 +66,23 @@ public class GUI_Thread implements Runnable{
 						Save_msg.conversations.remove(message.getEmetteur().pseudo);
 						
 						str.replaceAll(message.getEmetteur().pseudo + " :", message.new_me.pseudo + " :");
+						str = str + "=== " + message.getEmetteur().pseudo + " became " + message.new_me.pseudo + " ===\n\n";
 						
 						Save_msg.conversations.put(msg.getEmetteur().pseudo, str);
 						
-						//actualisation du texte si on est entrain de discuter avec la personne
+						//actualisation du texte si on est entrain de discuter avec la personne et de l'entete
 						int i = Main.frame_gui.table.getSelectedRow();
 						if(i != -1) {
 							if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo)) {
 								Main.frame_gui.textPane.setText(str);
+								Main.frame_gui.lblChoisirUnCorrespondant.setText("Conversation with " + message.new_me.pseudo);
+								
 							}
 						}
 						
 						//modification du pseudo dans la liste des utilisateurs
 						for (int i2 = Main.frame_gui.table.getRowCount() - 1; i2 >= 0; --i2) {
 							//Notification
-							System.out.println("On Notifie");
 							String str2 = (String) model.getValueAt(i2, 0);
 							if(str2.equals(msg.getEmetteur().pseudo)) model.setValueAt(message.new_me.pseudo, i2, 0);
 						}
