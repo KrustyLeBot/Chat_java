@@ -147,6 +147,7 @@ public class GUI extends JFrame {
 		lblChoisirUnCorrespondant = new JLabel("Choose a recipient");
 		
 		btnDeconnexion = new JButton("Disconnect");
+		btnDeconnexion.setEnabled(false);
 		btnDeconnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("deconnexion");

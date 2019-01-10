@@ -86,7 +86,8 @@ public class GUI_Thread implements Runnable{
 							String str2 = (String) model.getValueAt(i2, 0);
 							if(str2.equals(msg.getEmetteur().pseudo)) model.setValueAt(message.new_me.pseudo, i2, 0);
 						}
-						
+						Main.hm_users.remove(message.getEmetteur().pseudo);
+						Main.hm_users.put(message.new_me.pseudo, message.new_me.ip);
 					}
 				}
 				
