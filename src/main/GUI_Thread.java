@@ -72,7 +72,7 @@ public class GUI_Thread implements Runnable{
 						//actualisation du texte si on est entrain de discuter avec la personne et de l'entete
 						int i = Main.frame_gui.table.getSelectedRow();
 						if(i != -1) {
-							if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo) | Main.frame_gui.table.getSelectedRow(), 0).equals("** " + msg.getEmetteur().pseudo)) {
+							if(Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals(msg.getEmetteur().pseudo) | Main.frame_gui.table.getValueAt(Main.frame_gui.table.getSelectedRow(), 0).equals("** " + msg.getEmetteur().pseudo)) {
 								Main.frame_gui.textPane.setText(str);
 								Main.frame_gui.lblChoisirUnCorrespondant.setText("Conversation with " + message.new_me.pseudo);
 								
