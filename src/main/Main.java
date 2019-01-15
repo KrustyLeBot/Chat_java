@@ -17,6 +17,7 @@ public class Main {
 	public static UDPSender msg_sender = new UDPSender();
 	public static UDPReceiver msg_receiver;
 	public static Map<String,InetAddress> hm_users;
+	public static Map<InetAddress, String> user_state;
 	public static User me = null;
 	public static User blank = null;
 	public static User broadcast = null;
