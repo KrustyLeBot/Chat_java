@@ -217,6 +217,7 @@ public class GUI extends JFrame {
 					
 					if(!Main.hm_users.containsKey(nom)) {
 						//procedure de changement de pseudo
+						textField_1.setText(nom);
 						Main.msg_sender.sendNewPseudo(Main.me, new User(nom, Main.local_host));
 						Main.me.pseudo = nom;
 						return;

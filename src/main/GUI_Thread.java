@@ -89,6 +89,8 @@ public class GUI_Thread implements Runnable{
 						Main.hm_users.put(message.new_me.pseudo, message.new_me.ip);
 						System.out.println(Main.hm_users);
 					}
+					
+					Save_msg.Save_messages();
 				}
 				
 				
