@@ -1,12 +1,8 @@
 package network;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -36,6 +32,7 @@ public class TCPClient implements Runnable {
 			while(Main.connected) {
 				try {
 					Main.user_state = (Map<InetAddress, String>) ois.readObject();
+					System.out.println(Main.user_state);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
