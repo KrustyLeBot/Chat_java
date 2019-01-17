@@ -34,6 +34,7 @@ public class TCPClient implements Runnable {
 					Main.user_state = (Map<InetAddress, String>) ois.readObject();
 					System.out.println(Main.user_state);
 				} catch (ClassNotFoundException e) {
+					
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
