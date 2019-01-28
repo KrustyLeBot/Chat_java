@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Map;
 
 import main.Main;
@@ -16,20 +17,30 @@ public class TCPClient implements Runnable {
 	private InetAddress ipToSend;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
+	public int z;
 
-	public TCPClient(String fileName, InetAddress ipToSend) {
-		this.sock = new Socket();
-		this.ipToSend = ipToSend;
+	public TCPClient(String ipToSend) {
+		try {
+			this.ipToSend = InetAddress.getByName(ipToSend);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("TCPClient cree " + ipToSend);
 	}
 
 	@Override
 	public void run() {
 		try {
-			this.sock.connect(new InetSocketAddress(this.ipToSend, 8045));
+			System.out.println("Co serveur lancée");
+			this.sock = new Socket(this.ipToSend, 1235);
 			oos = new ObjectOutputStream(sock.getOutputStream());
 			ois = new ObjectInputStream(sock.getInputStream());
+			this.z = 0;
+					
+			comming_out("Online");
 			
-			while(Main.connected) {
+			while(z == 0) {
 				try {
 					Main.user_state = (Map<InetAddress, String>) ois.readObject();
 					System.out.println(Main.user_state);
@@ -39,19 +50,27 @@ public class TCPClient implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			
-			comming_out("Deconnexion");
-			
-			oos.close();
-			ois.close();
-			this.sock.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	public void deco() {
+		System.out.println("On sort du while de TCPClient");
+		
+		try {
+			oos.close();
+			ois.close();
+			this.sock.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void comming_out(String etat) {
+		System.out.println("Envoi etat : " + etat);
 		try {
 			oos.writeObject(etat);
 		} catch (IOException e) {

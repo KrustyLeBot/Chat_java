@@ -9,6 +9,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import network.TCPClient;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
@@ -25,6 +28,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.InetAddress;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemListener;
@@ -70,7 +75,14 @@ public class GUI extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				System.out.println("Closed");
 				
-				if(Main.connected | Main.connecting) Main.Disconnect();
+				if(Main.connected | Main.connecting) {
+					Main.Disconnect();
+					
+					System.out.println("On se deco du serveur de presence");
+					Main.co_tcp.z = 1;
+					Main.co_tcp.comming_out("Deconnexion");
+					Main.co_tcp.deco();
+				}
 				
 				e.getWindow().dispose();
 			}
@@ -174,6 +186,11 @@ public class GUI extends JFrame {
 						model.removeRow(i);
 					}
 				}
+				
+				System.out.println("On se deco du serveur de presence");
+				Main.co_tcp.z = 1;
+				Main.co_tcp.comming_out("Deconnexion");
+				Main.co_tcp.deco();
 			}
 		});
 				
@@ -181,6 +198,15 @@ public class GUI extends JFrame {
 		textField_1 = new JTextField();
 		textField_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("connexion de " + textField_1.getText());
+				//TODO
+				//Appeler la methode Connect
+				
+				btnDeconnexion.setEnabled(false);
+				btnConnexion.setEnabled(false);
+
+				textField.setEnabled(true);
+				Main.Connect();
 				
 			}
 		});
@@ -244,6 +270,12 @@ public class GUI extends JFrame {
 		textField_2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				if (!textField_2.getText().equals("")) {
+					btnNewButton.setEnabled(true);
+				}
+				else {
+					btnNewButton.setEnabled(false);
+				}
 			}
 		});
 		textField_2.setColumns(10);
@@ -253,17 +285,24 @@ public class GUI extends JFrame {
 		JComboBox comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
+				Main.co_tcp.comming_out((String)comboBox.getSelectedItem());
 			}
 		});
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Online", "Offline"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Online", "Offline", "Not Available"}));
+		comboBox.setEnabled(false);
+		
+		
 		
 		btnNewButton = new JButton("Go");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Main.co_tcp = new TCPClient(textField_2.getText());
+				Thread t = new Thread(Main.co_tcp);
+				t.start();
+				comboBox.setEnabled(true);
 			}
 		});
-		
-		
+		btnNewButton.setEnabled(false);
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

@@ -14,6 +14,7 @@ import network.*;
 
 public class Main {
 
+	public static TCPClient co_tcp;
 	public static UDPSender msg_sender = new UDPSender();
 	public static UDPReceiver msg_receiver;
 	public static Map<String,InetAddress> hm_users;
